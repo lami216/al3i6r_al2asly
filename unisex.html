@@ -166,7 +166,7 @@
         const priceText = product.desc.split(" - ")[1] || product.price + " أوقية";
         const descText = product.desc.split(" - ")[0];
         const symbols = productsData.symbols[product.name] || "";
-        const badgeHTML = product.badge ? `<span class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : "";
+        const badgeHTML = product.badge ? `<span class="absolute top-2 right-2 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : "";
 
         productDiv.className = "product";
         productDiv.innerHTML = `
