@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>مملكة العطور - الواجهة الجديدة</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N8G1EZJT5B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N8G1EZJT5B');
+</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #f8fafc;
+    }
+    .container { max-width: 100%; }
+    .product {
+      background: white;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      position: relative;
+    }
+    .product img {
+      max-width: 100%;
+      height: 250px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .product h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+    }
+    .product .availability {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .availability.yes {
+      color: #22c55e;
+    }
+    .availability.no {
+      color: #ef4444;
+    }
+    .product .price {
+      font-weight: bold;
+      color: #eab308;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .product button.order-btn {
+      background-color: #facc15;
+      color: #1f2937;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: 0.3s;
+    }
+    .product button.order-btn:hover {
+      background-color: #eab308;
+    }
+    .symbol {
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
+    }
+    #scrollToTop {
+      display: none;
+    }
+  </style>
+</head>
+<body class="text-gray-800">  <header class="text-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="index.html" class="flex items-center space-x-2">
+        <i class="fas fa-spray-can text-white text-2xl"></i>
+        <h1 class="text-xl font-bold">مملكة العطور</h1>
+      </a>
+    </div>
+  </header>  <section id="bannerSection" class="py-8 text-center">
+    <h2 id="bannerHeading" class="text-4xl font-bold mb-4">أرقى أنواع العطور بين يديك</h2>
+    <p id="bannerSub" class="text-lg">عطور أصلية – أسعار مميزة – توصيل فوري</p>
+  </section>  <section class="py-8 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 id="category-heading" class="text-2xl font-bold mb-6 text-center"></h2>
+      <div class="flex flex-col md:flex-row gap-4 justify-between mb-6">
+        <form id="searchForm" class="flex bg-white rounded-lg overflow-hidden flex-1">
+          <input type="text" id="searchInput" placeholder="ابحث عن عطر..." class="px-4 py-2 flex-1 outline-none">
+          <button type="submit" class="px-4 py-2 text-white"> <i class="fas fa-search"></i> </button>
+        </form>
+        <select id="priceFilter" class="w-full md:w-1/3 px-4 py-2 rounded border border-gray-300">
+          <option value="all">جميع الأسعار</option>
+          <option value="0-20000">أقل من 20000</option>
+          <option value="20000-50000">20000 - 50000</option>
+          <option value="50000-100000">50000 - 100000</option>
+          <option value="100000+">أكثر من 100000</option>
+        </select>
+      </div><div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4" id="product-grid">
+    <!-- سيتم توليد المنتجات تلقائيًا -->
+  </div>
+</div>
+
+  </section>  <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
+    <p>&copy; <span id="year"></span> مملكة العطور - جميع الحقوق محفوظة</p>
+  </footer>  <a href="#" id="scrollToTop" class="fixed bottom-5 left-5 bg-yellow-400 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-500 transition z-50">
+    <i class="fas fa-arrow-up"></i>
+  </a>  
+  <script src="products-data.js"></script>
+  <script>
+    const productGrid = document.getElementById("product-grid");
+    const searchInput = document.getElementById("searchInput");
+    const searchForm = document.getElementById("searchForm");
+    const priceFilter = document.getElementById("priceFilter");
+    const initialCategory = 'unisex';
+    const headingMap = { men: 'العطور الرجالية', women: 'العطور النسائية', unisex: 'العطور المختلطة', all: 'جميع العطور' };
+    document.getElementById('category-heading').textContent = headingMap[initialCategory] || 'جميع العطور';
+
+    const bannerMap = {
+      men: {heading:'أرقى العطور الرجالية بين يديك', sub:'مجموعة مختارة من أفضل العطور الرجالية بأسعار مميزة وتوصيل فوري'},
+      women: {heading:'أرقى العطور النسائية بين يديك', sub:'مجموعة مختارة من أفضل العطور النسائية بأسعار مميزة وتوصيل فوري'},
+      unisex: {heading:'أرقى العطور المختلطة بين يديك', sub:'مجموعة مناسبة للجنسين بأسعار مميزة وتوصيل فوري'},
+      all: {heading:'أرقى أنواع العطور بين يديك', sub:'عطور أصلية – أسعار مميزة – توصيل فوري'}
+    };
+    const themeMap = {
+      men: {headerFrom:'#3b82f6', headerTo:'#93c5fd', heroFrom:'#dbeafe', text:'#1e3a8a', button:'#3b82f6'},
+      women: {headerFrom:'#ec4899', headerTo:'#f9a8d4', heroFrom:'#fce7f3', text:'#9d174d', button:'#ec4899'},
+      unisex: {headerFrom:'#8b5cf6', headerTo:'#d8b4fe', heroFrom:'#ede9fe', text:'#5b21b6', button:'#8b5cf6'},
+      all: {headerFrom:'#f59e0b', headerTo:'#fcd34d', heroFrom:'#fef3c7', text:'#b45309', button:'#f59e0b'}
+    };
+    const banner = bannerMap[initialCategory] || bannerMap.all;
+    document.getElementById('bannerHeading').textContent = banner.heading;
+    document.getElementById('bannerSub').textContent = banner.sub;
+    const theme = themeMap[initialCategory] || themeMap.all;
+    document.querySelector('header').style.background = `linear-gradient(to right, ${theme.headerFrom}, ${theme.headerTo})`;
+    document.getElementById('bannerSection').style.background = `linear-gradient(to right, ${theme.heroFrom}, white)`;
+    document.getElementById('bannerHeading').style.color = theme.text;
+    document.getElementById('category-heading').style.color = theme.text;
+    document.querySelector('#searchForm button').style.backgroundColor = theme.button;
+
+    function displayProducts() {
+      const search = searchInput.value.toLowerCase();
+      const price = priceFilter.value;
+
+      productGrid.innerHTML = "";
+
+      let filtered = productsData.products.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search);
+        const matchesCategory = initialCategory === 'all' || p.category === initialCategory;
+        let matchesPrice = true;
+        if (price === '0-20000') matchesPrice = p.price < 20000;
+        else if (price === '20000-50000') matchesPrice = p.price >= 20000 && p.price <= 50000;
+        else if (price === '50000-100000') matchesPrice = p.price > 50000 && p.price <= 100000;
+        else if (price === '100000+') matchesPrice = p.price > 100000;
+
+        return matchesSearch && matchesCategory && matchesPrice;
+      });
+
+      filtered.forEach(product => {
+        const productDiv = document.createElement("div");
+        const isAvailable = product.available;
+        const availabilityText = isAvailable ? "متوفر" : "غير متوفر";
+        const availabilityClass = isAvailable ? "yes" : "no";
+        const priceText = product.desc.split(" - ")[1] || product.price + " أوقية";
+        const descText = product.desc.split(" - ")[0];
+        const symbols = productsData.symbols[product.name] || "";
+        const badgeHTML = product.badge ? `<span class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : "";
+
+        productDiv.className = "product";
+        productDiv.innerHTML = `
+          ${badgeHTML}
+          <div class="symbol">${symbols}</div>
+          <img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/250?text=عطر'">
+          <h3>${product.name}</h3>
+          <div class="availability ${availabilityClass}">${availabilityText}</div>
+          <p>${descText}</p>
+          <p class="price">${priceText}</p>
+          <button class="order-btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>
+        `;
+        productGrid.appendChild(productDiv);
+      });
+    }
+
+    function orderProduct(name) {
+      const message = `مرحبًا، أرغب بطلب عطر ${name}`;
+      window.location.href = `https://wa.me/22246099296?text=${encodeURIComponent(message)}`;
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    searchForm.addEventListener("submit", function(e){
+      e.preventDefault();
+      displayProducts();
+    });
+    searchInput.addEventListener("input", displayProducts);
+    priceFilter.addEventListener("change", displayProducts);
+
+    window.addEventListener("scroll", () => {
+      const scrollBtn = document.getElementById("scrollToTop");
+      scrollBtn.style.display = window.scrollY > 300 ? "flex" : "none";
+    });
+
+    displayProducts();
+  </script>
+</body>
+</html>
