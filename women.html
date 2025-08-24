@@ -126,7 +126,7 @@
     };
     const themeMap = {
       men: {headerFrom:'#3b82f6', headerTo:'#93c5fd', heroFrom:'#dbeafe', text:'#1e3a8a', button:'#3b82f6'},
-      women: {headerFrom:'#ec4899', headerTo:'#f9a8d4', heroFrom:'#fce7f3', text:'#9d174d', button:'#ec4899'},
+      women: {headerFrom:'#0ea5e9', headerTo:'#7dd3fc', heroFrom:'#e0f2fe', text:'#075985', button:'#0ea5e9'},
       unisex: {headerFrom:'#8b5cf6', headerTo:'#d8b4fe', heroFrom:'#ede9fe', text:'#5b21b6', button:'#8b5cf6'},
       all: {headerFrom:'#f59e0b', headerTo:'#fcd34d', heroFrom:'#fef3c7', text:'#b45309', button:'#f59e0b'}
     };
@@ -137,6 +137,7 @@
     document.querySelector('header').style.background = `linear-gradient(to right, ${theme.headerFrom}, ${theme.headerTo})`;
     document.getElementById('bannerSection').style.background = `linear-gradient(to right, ${theme.heroFrom}, white)`;
     document.getElementById('bannerHeading').style.color = theme.text;
+    document.getElementById('bannerSub').style.color = theme.text;
     document.getElementById('category-heading').style.color = theme.text;
     document.querySelector('#searchForm button').style.backgroundColor = theme.button;
 

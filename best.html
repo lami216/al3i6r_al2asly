@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>الأكثر مبيعاً</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f8fafc;
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+  <header class="bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="index.html" class="flex items-center space-x-2">
+        <i class="fas fa-spray-can text-white text-2xl"></i>
+        <h1 class="text-xl font-bold">مملكة العطور</h1>
+      </a>
+    </div>
+  </header>
+
+  <section class="py-8">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-6 text-center text-yellow-700">الأكثر مبيعاً</h2>
+      <div id="bestGrid" class="grid grid-cols-3 gap-4"></div>
+    </div>
+  </section>
+
+  <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
+    <p>&copy; <span id="year"></span> مملكة العطور - جميع الحقوق محفوظة</p>
+  </footer>
+
+  <script src="products-data.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const bestGrid = document.getElementById('bestGrid');
+    const bestProducts = productsData.products.filter(p => p.badge === 'الأكثر مبيعاً');
+    bestProducts.forEach(product => {
+      const div = document.createElement('div');
+      div.className = 'bg-gray-100 rounded-lg flex items-center justify-center p-4';
+      div.innerHTML = `<img src="${product.img}" alt="${product.name}" class="h-24 object-contain" onerror="this.src='https://via.placeholder.com/100?text=عطر'">`;
+      bestGrid.appendChild(div);
+    });
+  </script>
+</body>
+</html>
