@@ -11,6 +11,43 @@
       background-color: #f8fafc;
       overflow-x: hidden;
     }
+    .container { max-width: 100%; }
+    .product {
+      background: white;
+      padding: 1rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .product img {
+      max-width: 100%;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+    }
+    .product h3 { font-size: 1rem; margin-bottom: 0.25rem; color: #1e293b; overflow-wrap: anywhere; }
+    .product .availability { font-size: 0.9rem; margin-bottom: 0.25rem; }
+    .availability.yes { color: #22c55e; }
+    .availability.no { color: #ef4444; }
+    .product .price { font-weight: bold; color: #eab308; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .product button.order-btn {
+      background-color: #facc15;
+      color: #1f2937;
+      border: none;
+      padding: 0.4rem 0.6rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: 0.3s;
+    }
+    .product button.order-btn:hover { background-color: #eab308; }
+    .symbol { font-size: 1.2rem; margin-bottom: 0.25rem; }
+    .product p { overflow-wrap: anywhere; }
   </style>
 </head>
 <body class="text-gray-800">
@@ -26,7 +63,7 @@
   <section class="py-8">
     <div class="container mx-auto px-4">
       <h2 class="text-3xl font-bold mb-6 text-center text-yellow-700">الأكثر مبيعاً</h2>
-      <div id="bestGrid" class="grid grid-cols-3 gap-4"></div>
+      <div id="bestGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
     </div>
   </section>
 
@@ -41,10 +78,22 @@
     const bestProducts = productsData.products.filter(p => p.badge === 'الأكثر مبيعاً');
     bestProducts.forEach(product => {
       const div = document.createElement('div');
-      div.className = 'bg-gray-100 rounded-lg flex items-center justify-center p-4';
-      div.innerHTML = `<img src="${product.img}" alt="${product.name}" class="h-24 object-contain" onerror="this.src='https://via.placeholder.com/100?text=عطر'">`;
+      const isAvailable = product.available;
+      const availabilityText = isAvailable ? 'متوفر' : 'غير متوفر';
+      const availabilityClass = isAvailable ? 'yes' : 'no';
+      const priceText = product.desc.split(' - ')[1] || product.price + ' أوقية';
+      const descText = product.desc.split(' - ')[0];
+      const symbols = productsData.symbols[product.name] || '';
+      const badgeHTML = product.badge ? `<span class="absolute top-2 right-2 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : '';
+      div.className = 'product';
+      div.innerHTML = `${badgeHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p><button class="order-btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>`;
       bestGrid.appendChild(div);
     });
+
+    function orderProduct(name) {
+      const message = `مرحبًا، أرغب بطلب عطر ${name}`;
+      window.location.href = `https://wa.me/22246099296?text=${encodeURIComponent(message)}`;
+    }
   </script>
 </body>
 </html>
