@@ -165,7 +165,7 @@
         const availabilityText = isAvailable ? "متوفر" : "غير متوفر";
         const availabilityClass = isAvailable ? "yes" : "no";
         const priceText = product.originalPrice
-          ? `<span class="line-through">${product.originalPrice} أوقية</span> ${product.price} أوقية (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`
+          ? `<span class="line-through text-red-500">${product.originalPrice} أوقية</span> <span class="text-yellow-500">${product.price} أوقية</span> (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`
           : product.desc.split(" - ")[1] || product.price + " أوقية";
         const descText = product.desc.split(" - ")[0];
         const symbols = productsData.symbols[product.name] || "";

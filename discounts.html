@@ -11,6 +11,42 @@
       background-color: #f8fafc;
       overflow-x: hidden;
     }
+    .product {
+      background: white;
+      padding: 1rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .product img {
+      max-width: 100%;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+    }
+    .product h3 { font-size: 1rem; margin-bottom: 0.25rem; color: #1e293b; overflow-wrap: anywhere; }
+    .product .availability { font-size: 0.9rem; margin-bottom: 0.25rem; }
+    .availability.yes { color: #22c55e; }
+    .availability.no { color: #ef4444; }
+    .product .price { font-weight: bold; color: #eab308; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .product button.order-btn {
+      background-color: #facc15;
+      color: #1f2937;
+      border: none;
+      padding: 0.4rem 0.6rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: 0.3s;
+    }
+    .product button.order-btn:hover { background-color: #eab308; }
+    .symbol { font-size: 1.2rem; margin-bottom: 0.25rem; }
+    .product p { overflow-wrap: anywhere; }
   </style>
 </head>
 <body class="text-gray-800">
@@ -49,7 +85,7 @@
         const isAvailable = product.available;
         const availabilityText = isAvailable ? 'متوفر' : 'غير متوفر';
         const availabilityClass = isAvailable ? 'yes' : 'no';
-        const priceText = `<span class="line-through">${product.originalPrice} أوقية</span> ${product.price} أوقية (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`;
+        const priceText = `<span class="line-through text-red-500">${product.originalPrice} أوقية</span> <span class="text-yellow-500">${product.price} أوقية</span> (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`;
         const descText = product.desc.split(' - ')[0];
         const symbols = productsData.symbols[product.name] || '';
         const badgeHTML = product.badge ? `<span class="absolute top-2 right-2 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : '';
