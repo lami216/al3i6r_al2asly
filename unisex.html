@@ -9,6 +9,7 @@
     body {
       font-family: sans-serif;
       background-color: #f8fafc;
+      overflow-x: hidden;
     }
     .container { max-width: 100%; }
     .product {
@@ -34,65 +35,42 @@
       font-size: 1.2rem;
       margin-bottom: 0.5rem;
       color: #1e293b;
+      overflow-wrap: anywhere;
     }
-    .product .availability {
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-    }
-    .availability.yes {
-      color: #22c55e;
-    }
-    .availability.no {
-      color: #ef4444;
-    }
-    .product .price {
-      font-weight: bold;
-      color: #eab308;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-    }
-    .product button.order-btn {
-      background-color: #facc15;
-      color: #1f2937;
-      border: none;
-      padding: 0.6rem 1rem;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 0.95rem;
-      transition: 0.3s;
-    }
-    .product button.order-btn:hover {
-      background-color: #eab308;
-    }
-    .symbol {
-      font-size: 1.4rem;
-      margin-top: 1rem;
-      margin-bottom: 0.4rem;
-    }
-    #scrollToTop {
-      display: none;
-    }
+    .product .availability { font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .availability.yes { color: #22c55e; }
+    .availability.no { color: #ef4444; }
+    .product .price { font-weight: bold; color: #eab308; font-size: 1rem; margin-bottom: 1rem; }
+    .product button.order-btn { background-color: #facc15; color: #1f2937; border: none; padding: 0.6rem 1rem; border-radius: 12px; cursor: pointer; font-size: 0.95rem; transition: 0.3s; }
+    .product button.order-btn:hover { background-color: #eab308; }
+    .symbol { font-size: 1.4rem; margin-top: 1.5rem; margin-bottom: 0.4rem; }
+    .product p { overflow-wrap: anywhere; }
+    #scrollToTop { display: none; }
     #cartDrawer { position: fixed; top: 0; right: 0; width: 20rem; max-width: 80%; height: 100%; background: white; box-shadow: -2px 0 10px rgba(0,0,0,0.2); transform: translateX(100%); transition: transform 0.3s ease; z-index: 1000; }
     #cartDrawer.open { transform: translateX(0); }
   </style>
 </head>
-<body class="text-gray-800">  <header class="text-white shadow-lg sticky top-0 z-50">
+<body class="text-gray-800">
+  <header class="text-white shadow-lg sticky top-0 z-50 bg-gradient-to-r from-yellow-500 to-yellow-300">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <a href="index.html" class="flex items-center space-x-2">
         <i class="fas fa-spray-can text-white text-2xl"></i>
         <h1 class="text-xl font-bold">مملكة العطور</h1>
       </a>
+      <button onclick="toggleCart()" class="bg-yellow-500 text-white w-10 h-10 rounded-full flex items-center justify-center"><i class="fas fa-shopping-cart"></i></button>
     </div>
-  </header>  <section id="bannerSection" class="py-8 text-center">
+  </header>
+  <section id="bannerSection" class="py-8 text-center">
     <h2 id="bannerHeading" class="text-4xl font-bold mb-4">أرقى أنواع العطور بين يديك</h2>
     <p id="bannerSub" class="text-lg">عطور أصلية – أسعار مميزة – توصيل فوري</p>
-  </section>  <section class="py-8 bg-white">
+  </section>
+  <section class="py-8 bg-white">
     <div class="container mx-auto px-4">
       <h2 id="category-heading" class="text-2xl font-bold mb-6 text-center"></h2>
       <div class="flex flex-col md:flex-row gap-4 justify-between mb-6">
         <form id="searchForm" class="flex bg-white rounded-full overflow-hidden flex-1">
           <input type="text" id="searchInput" placeholder="ابحث عن عطر..." class="px-4 py-2 flex-1 outline-none">
-          <button type="submit" class="px-4 py-2 text-white"> <i class="fas fa-search"></i> </button>
+          <button type="submit" class="px-4 py-2 text-white"><i class="fas fa-search"></i></button>
         </form>
         <select id="priceFilter" class="w-full md:w-1/3 px-4 py-2 rounded-full border border-gray-300">
           <option value="all">جميع الأسعار</option>
@@ -101,34 +79,35 @@
           <option value="50000-100000">50000 - 100000</option>
           <option value="100000+">أكثر من 100000</option>
         </select>
-      </div><div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4" id="product-grid">
-    <!-- سيتم توليد المنتجات تلقائيًا -->
-  </div>
-</div>
-
-  </section>  <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4" id="product-grid"></div>
+    </div>
+  </section>
+  <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
     <p>&copy; <span id="year"></span> مملكة العطور - جميع الحقوق محفوظة</p>
-  </footer>  <a href="#" id="scrollToTop" class="fixed bottom-5 left-5 bg-yellow-400 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-500 transition z-50">
+  </footer>
+  <a href="#" id="scrollToTop" class="fixed bottom-5 left-5 bg-yellow-400 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-500 transition z-50">
     <i class="fas fa-arrow-up"></i>
-  </a>  
+  </a>
   <div id="cartDrawer">
     <div class="p-4 border-b flex justify-between items-center">
       <h2 class="text-lg font-bold">السلة</h2>
-      <button onclick="closeCart()" class="text-gray-600">&times;</button>
+      <button onclick="toggleCart()" class="text-gray-600">&times;</button>
     </div>
     <div id="cartItems" class="p-4 space-y-2 overflow-y-auto"></div>
   </div>
 
+  <script src="config.js"></script>
   <script src="products-data.js"></script>
   <script src="cart.js"></script>
   <script>
-    const productGrid = document.getElementById("product-grid");
-    const searchInput = document.getElementById("searchInput");
-    const searchForm = document.getElementById("searchForm");
-    const priceFilter = document.getElementById("priceFilter");
+    const productGrid = document.getElementById('product-grid');
+    const searchInput = document.getElementById('searchInput');
+    const searchForm = document.getElementById('searchForm');
+    const priceFilter = document.getElementById('priceFilter');
     const initialCategory = 'unisex';
     const headingMap = { men: 'العطور الرجالية', women: 'العطور النسائية', unisex: 'العطور المختلطة', all: 'جميع العطور' };
-    document.getElementById('category-heading').textContent = headingMap[initialCategory] || 'جميع العطور';
+    document.getElementById('category-heading').textContent = headingMap[initialCategory] || '';
 
     const bannerMap = {
       men: {heading:'أرقى العطور الرجالية بين يديك', sub:'مجموعة مختارة من أفضل العطور الرجالية بأسعار مميزة وتوصيل فوري'},
@@ -155,9 +134,7 @@
     function displayProducts() {
       const search = searchInput.value.toLowerCase();
       const price = priceFilter.value;
-
-      productGrid.innerHTML = "";
-
+      productGrid.innerHTML = '';
       let filtered = productsData.products.filter(p => {
         const matchesSearch = p.name.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search);
         const matchesCategory = initialCategory === 'all' || p.category === initialCategory;
@@ -166,59 +143,44 @@
         else if (price === '20000-50000') matchesPrice = p.price >= 20000 && p.price <= 50000;
         else if (price === '50000-100000') matchesPrice = p.price > 50000 && p.price <= 100000;
         else if (price === '100000+') matchesPrice = p.price > 100000;
-
         return matchesSearch && matchesCategory && matchesPrice;
       });
-
       filtered.forEach(product => {
-        const productDiv = document.createElement("div");
+        const productDiv = document.createElement('div');
         const isAvailable = product.available;
-        const availabilityText = isAvailable ? "متوفر" : "غير متوفر";
-        const availabilityClass = isAvailable ? "yes" : "no";
+        const availabilityText = isAvailable ? 'متوفر' : 'غير متوفر';
+        const availabilityClass = isAvailable ? 'yes' : 'no';
         const priceText = product.originalPrice
           ? `<span class="line-through text-red-500">${product.originalPrice} أوقية</span> <span class="text-yellow-500">${product.price} أوقية</span> (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`
-          : product.desc.split(" - ")[1] || product.price + " أوقية";
-        const descText = product.desc.split(" - ")[0];
-        const symbols = productsData.symbols[product.name] || "";
-        const badgeHTML = product.badge ? `<span class="absolute top-1 right-2 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : "";
-        const cartHTML = `<button class="absolute top-1 left-2 bg-yellow-500 text-white rounded-full w-8 h-8 flex items-center justify-center" onclick="openCart()"><i class="fas fa-shopping-cart"></i><span class="cart-count absolute -top-1 -right-1 bg-red-500 text-xs rounded-full w-4 h-4 flex items-center justify-center">0</span></button>`;
-
-        productDiv.className = "product";
-        productDiv.innerHTML = `
-          ${badgeHTML}${cartHTML}
-          <div class="symbol">${symbols}</div>
-          <img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/250?text=عطر'">
-          <h3>${product.name}</h3>
-          <div class="availability ${availabilityClass}">${availabilityText}</div>
-          <p>${descText}</p>
-          <p class="price">${priceText}</p>
-          <button class="order-btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>
-        `;
+          : product.desc.split(' - ')[1] || product.price + ' أوقية';
+        const descText = product.desc.split(' - ')[0];
+        const symbols = productsData.symbols[product.name] || '';
+        const badgeHTML = product.badge ? `<span class="absolute top-0 right-2 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : '';
+        productDiv.className = 'product';
+        productDiv.setAttribute('data-id', product.name);
+        productDiv.setAttribute('data-name', product.name);
+        productDiv.setAttribute('data-price', product.price);
+        productDiv.setAttribute('data-image', product.img);
+        const addBtnHTML = `<button class="absolute top-0 left-2 bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm" onclick="addToCartFromCard(this)">+</button>`;
+        productDiv.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/250?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p><button class="order-btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>`;
         productGrid.appendChild(productDiv);
       });
     }
 
     function orderProduct(name) {
       const product = productsData.products.find(p => p.name === name);
-      addToCart(product);
       const message = `مرحبًا، أرغب بطلب عطر ${name} بسعر ${product.price} أوقية`;
-      window.open(`https://wa.me/22246099296?text=${encodeURIComponent(message)}`, '_blank');
+      window.open(`https://wa.me/${config.whatsapp.number}?text=${encodeURIComponent(message)}`, '_blank');
     }
 
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    searchForm.addEventListener("submit", function(e){
-      e.preventDefault();
-      displayProducts();
+    document.getElementById('year').textContent = new Date().getFullYear();
+    searchForm.addEventListener('submit', function(e){ e.preventDefault(); displayProducts(); });
+    searchInput.addEventListener('input', displayProducts);
+    priceFilter.addEventListener('change', displayProducts);
+    window.addEventListener('scroll', () => {
+      const scrollBtn = document.getElementById('scrollToTop');
+      scrollBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
     });
-    searchInput.addEventListener("input", displayProducts);
-    priceFilter.addEventListener("change", displayProducts);
-
-    window.addEventListener("scroll", () => {
-      const scrollBtn = document.getElementById("scrollToTop");
-      scrollBtn.style.display = window.scrollY > 300 ? "flex" : "none";
-    });
-
     displayProducts();
   </script>
 </body>

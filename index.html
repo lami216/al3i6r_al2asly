@@ -43,9 +43,9 @@
       transition: 0.3s;
     }
     .product button.order-btn:hover { background-color: #eab308; }
-    .symbol { font-size: 1.2rem; margin-top: 1rem; margin-bottom: 0.25rem; }
+    .symbol { font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.25rem; }
     .product p { overflow-wrap: anywhere; }
-    #cartDrawer { position: fixed; top: 0; right: 0; width: 16rem; max-width: 80%; height: 100%; background: white; box-shadow: -2px 0 10px rgba(0,0,0,0.2); transform: translateX(100%); transition: transform 0.3s ease; z-index: 1000; }
+    #cartDrawer { position: fixed; top: 0; right: 0; width: 20rem; max-width: 80%; height: 100%; background: white; box-shadow: -2px 0 10px rgba(0,0,0,0.2); transform: translateX(100%); transition: transform 0.3s ease; z-index: 1000; }
     #cartDrawer.open { transform: translateX(0); }
   </style>
 </head>
@@ -56,6 +56,9 @@
         <i class="fas fa-spray-can text-white text-2xl"></i>
         <h1 class="text-xl font-bold">مملكة العطور</h1>
       </a>
+      <button onclick="toggleCart()" class="bg-yellow-500 text-white w-10 h-10 rounded-full flex items-center justify-center">
+        <i class="fas fa-shopping-cart"></i>
+      </button>
     </div>
   </header>
 
@@ -126,11 +129,12 @@
   <div id="cartDrawer">
     <div class="p-4 border-b flex justify-between items-center">
       <h2 class="text-lg font-bold">السلة</h2>
-      <button onclick="closeCart()" class="text-gray-600">&times;</button>
+      <button onclick="toggleCart()" class="text-gray-600">&times;</button>
     </div>
     <div id="cartItems" class="p-4 space-y-2 overflow-y-auto"></div>
   </div>
 
+  <script src="config.js"></script>
   <script src="products-data.js"></script>
   <script src="cart.js"></script>
   <script>
@@ -168,10 +172,14 @@
           ? `<span class="line-through text-red-500">${product.originalPrice} أوقية</span> <span class="text-yellow-500">${product.price} أوقية</span> (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`
           : (product.desc.split(' - ')[1] || product.price + ' أوقية');
         const symbols = productsData.symbols[product.name] || '';
-        const badgeHTML = product.badge ? `<span class="absolute top-1 right-2 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : '';
-        const cartHTML = `<button class="absolute top-1 left-2 bg-yellow-500 text-white rounded-full w-8 h-8 flex items-center justify-center" onclick="openCart()"><i class="fas fa-shopping-cart"></i><span class="cart-count absolute -top-1 -right-1 bg-red-500 text-xs rounded-full w-4 h-4 flex items-center justify-center">0</span></button>`;
+        const badgeHTML = product.badge ? `<span class="absolute top-0 right-2 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : '';
         div.className = 'product';
-        div.innerHTML = `${badgeHTML}${cartHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p class="price">${priceText}</p><button class="order-btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>`;
+        div.setAttribute('data-id', product.name);
+        div.setAttribute('data-name', product.name);
+        div.setAttribute('data-price', product.price);
+        div.setAttribute('data-image', product.img);
+        const addBtnHTML = `<button class="absolute top-0 left-2 bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm" onclick="addToCartFromCard(this)">+</button>`;
+        div.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p class="price">${priceText}</p><button class="order-btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>`;
         searchResults.appendChild(div);
       });
 
@@ -199,9 +207,8 @@
 
     function orderProduct(name) {
       const product = productsData.products.find(p => p.name === name);
-      addToCart(product);
       const message = `مرحبًا، أرغب بطلب عطر ${name} بسعر ${product.price} أوقية`;
-      window.open(`https://wa.me/22246099296?text=${encodeURIComponent(message)}`, '_blank');
+      window.open(`https://wa.me/${config.whatsapp.number}?text=${encodeURIComponent(message)}`, '_blank');
     }
   </script>
 </body>
