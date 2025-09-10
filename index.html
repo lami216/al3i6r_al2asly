@@ -153,7 +153,9 @@
         const isAvailable = product.available;
         const availabilityText = isAvailable ? 'متوفر' : 'غير متوفر';
         const availabilityClass = isAvailable ? 'yes' : 'no';
-        const priceText = product.desc.split(' - ')[1] || product.price + ' أوقية';
+        const priceText = product.originalPrice
+          ? `<span class="line-through">${product.originalPrice} أوقية</span> ${product.price} أوقية (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`
+          : (product.desc.split(' - ')[1] || product.price + ' أوقية');
         const symbols = productsData.symbols[product.name] || '';
         const badgeHTML = product.badge ? `<span class="absolute top-2 right-2 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : '';
         div.className = 'product';
@@ -184,7 +186,8 @@
     renderResults();
 
     function orderProduct(name) {
-      const message = `مرحبًا، أرغب بطلب عطر ${name}`;
+      const product = productsData.products.find(p => p.name === name);
+      const message = `مرحبًا، أرغب بطلب عطر ${name} بسعر ${product.price} أوقية`;
       window.location.href = `https://wa.me/22246099296?text=${encodeURIComponent(message)}`;
     }
   </script>

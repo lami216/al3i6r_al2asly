@@ -26,7 +26,8 @@
   <section class="py-8">
     <div class="container mx-auto px-4">
       <h2 class="text-3xl font-bold mb-6 text-center text-green-700">التخفيضات</h2>
-      <p class="text-center text-gray-500">لا توجد عطور ضمن التخفيضات حالياً</p>
+      <div id="discountGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+      <p id="noDiscounts" class="text-center text-gray-500 hidden">لا توجد عطور ضمن التخفيضات حالياً</p>
     </div>
   </section>
 
@@ -34,8 +35,35 @@
     <p>&copy; <span id="year"></span> مملكة العطور - جميع الحقوق محفوظة</p>
   </footer>
 
+  <script src="products-data.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+    const discountGrid = document.getElementById('discountGrid');
+    const noDiscounts = document.getElementById('noDiscounts');
+    const discounted = productsData.products.filter(p => p.originalPrice);
+    if (discounted.length === 0) {
+      noDiscounts.classList.remove('hidden');
+    } else {
+      discounted.forEach(product => {
+        const div = document.createElement('div');
+        const isAvailable = product.available;
+        const availabilityText = isAvailable ? 'متوفر' : 'غير متوفر';
+        const availabilityClass = isAvailable ? 'yes' : 'no';
+        const priceText = `<span class="line-through">${product.originalPrice} أوقية</span> ${product.price} أوقية (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`;
+        const descText = product.desc.split(' - ')[0];
+        const symbols = productsData.symbols[product.name] || '';
+        const badgeHTML = product.badge ? `<span class="absolute top-2 right-2 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : '';
+        div.className = 'product';
+        div.innerHTML = `${badgeHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p><button class="order-btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>`;
+        discountGrid.appendChild(div);
+      });
+    }
+
+    function orderProduct(name) {
+      const product = productsData.products.find(p => p.name === name);
+      const message = `مرحبًا، أرغب بطلب عطر ${name} بسعر ${product.price} أوقية`;
+      window.location.href = `https://wa.me/22246099296?text=${encodeURIComponent(message)}`;
+    }
   </script>
 </body>
 </html>
