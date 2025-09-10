@@ -45,8 +45,10 @@
       transition: 0.3s;
     }
     .product button.order-btn:hover { background-color: #eab308; }
-    .symbol { font-size: 1.2rem; margin-bottom: 0.25rem; }
+    .symbol { font-size: 1.2rem; margin-top: 1rem; margin-bottom: 0.25rem; }
     .product p { overflow-wrap: anywhere; }
+    #cartDrawer { position: fixed; top: 0; right: 0; width: 16rem; max-width: 80%; height: 100%; background: white; box-shadow: -2px 0 10px rgba(0,0,0,0.2); transform: translateX(100%); transition: transform 0.3s ease; z-index: 1000; }
+    #cartDrawer.open { transform: translateX(0); }
   </style>
 </head>
 <body class="text-gray-800">
@@ -71,7 +73,16 @@
     <p>&copy; <span id="year"></span> مملكة العطور - جميع الحقوق محفوظة</p>
   </footer>
 
+  <div id="cartDrawer">
+    <div class="p-4 border-b flex justify-between items-center">
+      <h2 class="text-lg font-bold">السلة</h2>
+      <button onclick="closeCart()" class="text-gray-600">&times;</button>
+    </div>
+    <div id="cartItems" class="p-4 space-y-2 overflow-y-auto"></div>
+  </div>
+
   <script src="products-data.js"></script>
+  <script src="cart.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
     const discountGrid = document.getElementById('discountGrid');
@@ -88,17 +99,19 @@
         const priceText = `<span class="line-through text-red-500">${product.originalPrice} أوقية</span> <span class="text-yellow-500">${product.price} أوقية</span> (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`;
         const descText = product.desc.split(' - ')[0];
         const symbols = productsData.symbols[product.name] || '';
-        const badgeHTML = product.badge ? `<span class="absolute top-2 right-2 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : '';
+        const badgeHTML = product.badge ? `<span class="absolute top-1 right-2 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : '';
+        const cartHTML = `<button class="absolute top-1 left-2 bg-yellow-500 text-white rounded-full w-8 h-8 flex items-center justify-center" onclick="openCart()"><i class="fas fa-shopping-cart"></i><span class="cart-count absolute -top-1 -right-1 bg-red-500 text-xs rounded-full w-4 h-4 flex items-center justify-center">0</span></button>`;
         div.className = 'product';
-        div.innerHTML = `${badgeHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p><button class="order-btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>`;
+        div.innerHTML = `${badgeHTML}${cartHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p><button class="order-btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>`;
         discountGrid.appendChild(div);
       });
     }
 
     function orderProduct(name) {
       const product = productsData.products.find(p => p.name === name);
+      addToCart(product);
       const message = `مرحبًا، أرغب بطلب عطر ${name} بسعر ${product.price} أوقية`;
-      window.location.href = `https://wa.me/22246099296?text=${encodeURIComponent(message)}`;
+      window.open(`https://wa.me/22246099296?text=${encodeURIComponent(message)}`, '_blank');
     }
   </script>
 </body>
