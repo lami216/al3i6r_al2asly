@@ -1,8 +1,8 @@
 (function(){
-  const defaultLang = (typeof config !== 'undefined' && config.brand && config.brand.languages && config.brand.languages.length)
-    ? config.brand.languages[0]
-    : 'ar';
-  let currentLang = localStorage.getItem('ui_lang') || defaultLang;
+  const langs = (typeof config !== 'undefined' && config.languages && config.languages.length)
+    ? config.languages
+    : ['ar','fr'];
+  let currentLang = localStorage.getItem('ui_lang') || langs[0];
   const htmlEl = document.documentElement;
   window.i18nData = {};
 
@@ -42,14 +42,17 @@
     setDir(lang);
     applyTranslations();
     const toggle = document.getElementById('langToggle');
-    if(toggle){ toggle.textContent = lang === 'ar' ? 'FR' : 'AR'; }
+    if(toggle){
+      const next = langs[(langs.indexOf(lang)+1)%langs.length] || '';
+      toggle.textContent = next.toUpperCase();
+    }
     if(typeof renderCart === 'function') renderCart();
     if(typeof initWishlistForProducts === 'function') initWishlistForProducts();
   }
   window.changeLanguage = function(){
-    const next = currentLang === 'ar' ? 'fr' : 'ar';
+    const idx = langs.indexOf(currentLang);
+    const next = langs[(idx+1)%langs.length];
     loadLang(next);
   }
-
   loadLang(currentLang);
 })();

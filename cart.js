@@ -18,8 +18,8 @@ styleEl.textContent = `
 const existingStyle = document.head.querySelector('#toastWishlistStyle');
 if(!existingStyle){ styleEl.id = 'toastWishlistStyle'; document.head.appendChild(styleEl); }
 
-// global add-to-cart button markup for product cards
-window.addBtnHTML = `<button class="absolute -top-3 left-2 z-20 bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm" onclick="addToCartFromCard(this)"><i class="fas fa-cart-plus"></i></button>`;
+// global add-to-cart button markup for product cards (removed top button)
+window.addBtnHTML = '';
 
 function loadCart(){
   try{ const data = localStorage.getItem('perfume_cart'); cart = data ? JSON.parse(data) : []; cart = cart.map(i=>({...i, qty:i.qty?Number(i.qty):1})); }
@@ -208,14 +208,12 @@ function confirmCheckout(){
   }
   checkoutData.name = name; checkoutData.phone = phone; saveCheckoutData();
   const total = cart.reduce((s,i)=> s + Number(i.price)*i.qty,0);
-  let msg = 'طلب جديد:\n';
-  cart.forEach(i => { msg += `- ${i.name} ×${i.qty} — ${i.price} أوقية\n`; });
-  msg += `الإجمالي: ${total} أوقية\n`;
-  msg += `الاسم: ${name}\nالهاتف: ${phone}\n`;
+  const itemsStr = cart.map(i=>`- ${i.name} ×${i.qty} — ${i.price} أوقية`).join('\n');
   const address = checkoutData.lat ? `https://maps.google.com/?q=${checkoutData.lat},${checkoutData.lng}` : (checkoutData.address||'');
-  msg += `العنوان: ${address}`;
+  const template = config.whatsapp && config.whatsapp.template ? config.whatsapp.template : '';
+  const message = buildWhatsAppMessage(template, { items: itemsStr, total, name, phone, address });
   const phoneNum = config.whatsapp && config.whatsapp.number ? config.whatsapp.number : '';
-  const url = `https://wa.me/${phoneNum}?text=${encodeURIComponent(msg)}`;
+  const url = `https://wa.me/${phoneNum}?text=${encodeURIComponent(message)}`;
   window.open(url, '_blank');
   showToast(t('toasts.checkout_success'));
   cart = []; saveCart(); renderCart(); updateCartCount();
