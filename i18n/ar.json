@@ -1,0 +1,33 @@
+{
+  "titles": {
+    "brand": "مملكة العطور",
+    "cart": "السلة",
+    "wishlist": "المفضّلة",
+    "checkout": "ملخّص الطلب"
+  },
+  "buttons": {
+    "checkout": "إتمام الطلب",
+    "confirm": "تأكيد وإرسال عبر واتساب",
+    "use_my_location": "استخدام موقعي الحالي",
+    "view_map": "عرض على الخريطة"
+  },
+  "labels": {
+    "full_name": "الاسم الكامل",
+    "phone": "رقم الهاتف",
+    "manual_address": "العنوان اليدوي"
+  },
+  "toasts": {
+    "added_cart": "تمت إضافة {name} إلى السلة",
+    "added_wishlist": "أُضيف للمفضّلة",
+    "removed_wishlist": "أُزيل من المفضّلة",
+    "checkout_success": "تم إرسال الطلب عبر واتساب"
+  },
+  "cart": {
+    "empty": "سلة التسوق فارغة",
+    "total": "الإجمالي:",
+    "buy_all": "شراء الجميع"
+  },
+  "wishlist": {
+    "empty": "لا توجد عناصر في المفضّلة"
+  }
+}

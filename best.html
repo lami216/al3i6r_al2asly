@@ -28,12 +28,16 @@
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <a href="index.html" class="flex items-center space-x-2">
         <i class="fas fa-spray-can text-white text-2xl"></i>
-        <h1 class="text-xl font-bold">مملكة العطور</h1>
+        <h1 class="text-xl font-bold" data-i18n="titles.brand">مملكة العطور</h1>
       </a>
-      <button onclick="toggleCart()" class="relative text-white p-2 bg-transparent">
-        <i class="fas fa-shopping-cart text-2xl"></i>
-        <span id="cartCount" class="hidden absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"></span>
-      </button>
+      <div class="flex items-center gap-4">
+        <button id="langToggle" onclick="changeLanguage()" class="text-sm">FR</button>
+        <a href="wishlist.html" class="text-white"><i class="fas fa-heart text-2xl"></i></a>
+        <button onclick="toggleCart()" class="relative text-white p-2 bg-transparent">
+          <i class="fas fa-shopping-cart text-2xl"></i>
+          <span id="cartCount" class="hidden absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"></span>
+        </button>
+      </div>
     </div>
   </header>
   <section class="py-8">
@@ -47,20 +51,21 @@
   </footer>
   <div id="cartDrawer">
     <div class="p-4 border-b flex justify-between items-center">
-      <h2 class="text-lg font-bold">السلة</h2>
+      <h2 class="text-lg font-bold" data-i18n="titles.cart">السلة</h2>
       <button onclick="toggleCart()" class="text-gray-600">&times;</button>
     </div>
     <div id="cartItems" class="p-4 space-y-2 overflow-y-auto"></div>
   </div>
 
   <script src="config.js"></script>
+  <script src="i18n.js"></script>
   <script src="products-data.js"></script>
   <script src="cart.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
     const bestGrid = document.getElementById('bestGrid');
-    const bestProducts = productsData.products.filter(p => p.badge === 'الأكثر مبيعاً');
-    bestProducts.forEach(product => {
+  const bestProducts = productsData.products.filter(p => p.badge === 'الأكثر مبيعاً');
+  bestProducts.forEach(product => {
       const div = document.createElement('div');
       const isAvailable = product.available;
       const availabilityText = isAvailable ? 'متوفر' : 'غير متوفر';
@@ -77,8 +82,9 @@
       div.setAttribute('data-price', product.price);
       div.setAttribute('data-image', product.img);
       div.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p><button class="order-btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>`;
-      bestGrid.appendChild(div);
-    });
+    bestGrid.appendChild(div);
+  });
+  initWishlistForProducts();
 
     function orderProduct(name) {
       const product = productsData.products.find(p => p.name === name);
