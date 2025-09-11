@@ -10,7 +10,7 @@ styleEl.textContent = `
 #cartToast { position: fixed; bottom: 1rem; left:50%; transform:translateX(-50%); background:#16a34a; color:white; padding:0.75rem 1rem; border-radius:0.5rem; z-index:2000; display:flex; gap:0.5rem; align-items:center; animation:fadeIn 0.3s ease-out; }
 #cartToast.fade-out { animation:fadeOut 0.3s forwards; }
 #cartToast button { background:rgba(255,255,255,0.2); padding:0.25rem 0.5rem; border-radius:0.25rem; }
-.wishlist-btn { position:absolute; top:-0.75rem; left:2.5rem; z-index:20; color:#aaa; }
+.wishlist-btn { position:absolute; top:0.25rem; left:0.25rem; z-index:20; color:#aaa; font-size:1.25rem; }
 .wishlist-btn.active { color:#e11d48; }
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 @keyframes fadeOut{from{opacity:1;}to{opacity:0;}}
