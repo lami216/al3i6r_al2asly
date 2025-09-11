@@ -1,6 +1,6 @@
 {
   "titles": {
-    "brand": "Royaume des Parfums",
+    "brand": "{brand}",
     "cart": "Panier",
     "wishlist": "Favoris",
     "checkout": "Résumé de la commande",
@@ -68,11 +68,11 @@
     "empty": "Aucun article dans les favoris"
   },
   "home": {
-    "hero_title": "Bienvenue au Royaume des Parfums",
+    "hero_title": "Bienvenue au {brand}",
     "hero_text": "Nous vous proposons les meilleurs parfums authentiques avec livraison rapide à des prix avantageux",
     "categories_title": "Catégories principales",
     "about_title": "À propos de la boutique",
-    "about_text": "Royaume des Parfums est une boutique fiable offrant les meilleurs parfums originaux avec un service client de qualité.",
+    "about_text": "{brand} est une boutique fiable offrant les meilleurs parfums originaux avec un service client de qualité.",
     "footer_rights": "Tous droits réservés"
   },
   "footer": {
@@ -101,32 +101,44 @@
     },
     "discounts": {
       "title": "Promotions",
-      "description": "Parfums en promotion"
+      "description": "Parfums en promotion",
+      "banner_title": "Les meilleurs parfums à portée de main",
+      "banner_sub": "Parfums authentiques – prix avantageux – livraison rapide"
     },
     "best": {
       "title": "Meilleures ventes",
-      "description": "Les parfums les plus vendus"
+      "description": "Les parfums les plus vendus",
+      "banner_title": "Les meilleurs parfums à portée de main",
+      "banner_sub": "Parfums authentiques – prix avantageux – livraison rapide"
     },
     "men": {
       "title": "Parfums hommes",
-      "description": "Large choix de parfums pour hommes"
+      "description": "Large choix de parfums pour hommes",
+      "banner_title": "Les meilleurs parfums à portée de main",
+      "banner_sub": "Parfums authentiques – prix avantageux – livraison rapide"
     },
     "women": {
       "title": "Parfums femmes",
-      "description": "Les meilleurs parfums pour femmes"
+      "description": "Les meilleurs parfums pour femmes",
+      "banner_title": "Les meilleurs parfums à portée de main",
+      "banner_sub": "Parfums authentiques – prix avantageux – livraison rapide"
     },
     "unisex": {
       "title": "Parfums mixtes",
-      "description": "Parfums adaptés aux deux sexes"
+      "description": "Parfums adaptés aux deux sexes",
+      "banner_title": "Les meilleurs parfums à portée de main",
+      "banner_sub": "Parfums authentiques – prix avantageux – livraison rapide"
     },
     "all": {
       "title": "Tous les parfums",
-      "description": "Tous les parfums disponibles"
+      "description": "Tous les parfums disponibles",
+      "banner_title": "Les meilleurs parfums à portée de main",
+      "banner_sub": "Parfums authentiques – prix avantageux – livraison rapide"
     },
     "about": {
       "title": "À propos",
-      "content": "Royaume des Parfums est une boutique fiable offrant les meilleurs parfums originaux avec un service client de qualité",
-      "description": "Découvrir Royaume des Parfums"
+      "content": "{brand} est une boutique fiable offrant les meilleurs parfums originaux avec un service client de qualité",
+      "description": "Découvrir {brand}"
     },
     "contact": {
       "title": "Contactez-nous",
@@ -136,18 +148,29 @@
     "privacy": {
       "title": "Politique de confidentialité",
       "content": "Nous respectons votre vie privée et ne partageons pas vos données",
-      "description": "Politique de confidentialité de Royaume des Parfums"
+      "description": "Politique de confidentialité de {brand}"
     },
     "terms": {
       "title": "Conditions générales",
       "content": "En utilisant le site, vous acceptez les conditions suivantes",
-      "description": "Conditions d'utilisation de Royaume des Parfums"
+      "description": "Conditions d'utilisation de {brand}"
     },
     "not_found": {
       "title": "Page non trouvée",
       "message": "Page non trouvée — Retour à l’accueil",
       "back_home": "Retour à l’accueil",
       "description": "La page demandée est introuvable"
+    },
+    "checkout": {
+      "title": "Résumé de la commande",
+      "description": "Confirmer les détails avant envoi"
     }
+  },
+  "filters": {
+    "all": "Tous les prix",
+    "0_20000": "Moins de 20000",
+    "20000_50000": "20000 - 50000",
+    "50000_100000": "50000 - 100000",
+    "100000_plus": "Plus de 100000"
   }
 }
