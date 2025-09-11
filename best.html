@@ -30,7 +30,10 @@
         <i class="fas fa-spray-can text-white text-2xl"></i>
         <h1 class="text-xl font-bold">مملكة العطور</h1>
       </a>
-      <button onclick="toggleCart()" class="text-white p-2 bg-transparent"><i class="fas fa-shopping-cart text-2xl"></i></button>
+      <button onclick="toggleCart()" class="relative text-white p-2 bg-transparent">
+        <i class="fas fa-shopping-cart text-2xl"></i>
+        <span id="cartCount" class="hidden absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"></span>
+      </button>
     </div>
   </header>
   <section class="py-8">

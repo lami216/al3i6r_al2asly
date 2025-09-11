@@ -1,6 +1,26 @@
 // Cart management using localStorage
 let cart = [];
 
+// inject styles for add-to-cart message
+const cartMsgStyle = document.createElement('style');
+cartMsgStyle.textContent = `
+#cartMessage {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  background: #16a34a;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  z-index: 2000;
+  animation: cartMsgMove 0.6s forwards;
+}
+@keyframes cartMsgMove {
+  from { top: 1rem; left: 1rem; opacity: 0; }
+  to { top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 1; }
+}`;
+document.head.appendChild(cartMsgStyle);
+
 function loadCart() {
   try {
     const data = localStorage.getItem('perfume_cart');
@@ -19,6 +39,7 @@ function addToCart(product) {
   cart.push(product);
   saveCart();
   renderCart();
+  showCartMessage();
 }
 
 function removeFromCart(id) {
@@ -32,6 +53,7 @@ function renderCart() {
   if (!container) return;
   if (cart.length === 0) {
     container.innerHTML = '<p class="text-center text-gray-500 mt-4">سلة التسوق فارغة</p>';
+    updateCartCount();
     return;
   }
   let total = 0;
@@ -53,6 +75,30 @@ function renderCart() {
       <span class="text-yellow-600">${total} أوقية</span>
     </div>
     <button onclick="checkout()" class="w-full bg-green-500 text-white py-2 rounded">شراء الجميع</button>`;
+  updateCartCount();
+}
+
+function updateCartCount() {
+  const countEl = document.getElementById('cartCount');
+  if (!countEl) return;
+  countEl.textContent = cart.length;
+  if (cart.length > 0) {
+    countEl.classList.remove('hidden');
+  } else {
+    countEl.classList.add('hidden');
+  }
+}
+
+function showCartMessage() {
+  const existing = document.getElementById('cartMessage');
+  if (existing) existing.remove();
+  const msg = document.createElement('div');
+  msg.id = 'cartMessage';
+  msg.textContent = 'تم إضافة المنتج للسلة';
+  document.body.appendChild(msg);
+  setTimeout(() => {
+    msg.remove();
+  }, 1500);
 }
 
 function buildWhatsAppMessage() {
