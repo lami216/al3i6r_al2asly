@@ -11,7 +11,8 @@
     "use_my_location": "Utiliser ma position",
     "view_map": "Voir sur la carte",
     "continue_shopping": "Continuer les achats",
-    "cancel": "Annuler et revenir au panier"
+    "cancel": "Annuler et revenir au panier",
+    "add_to_cart": "Ajouter au panier"
   },
   "labels": {
     "full_name": "Nom complet",

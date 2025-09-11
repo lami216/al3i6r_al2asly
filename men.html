@@ -83,7 +83,7 @@
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <a href="index.html" class="flex items-center space-x-2">
         <i class="fas fa-spray-can text-white text-2xl"></i>
-        <h1 class="text-xl font-bold" data-i18n="titles.brand">مملكة العطور</h1>
+        <h1 class="text-xl font-bold logo__text">مملكة العطور</h1>
       </a>
       <div class="flex items-center gap-4">
         <button id="langToggle" onclick="changeLanguage()" class="text-sm">FR</button>
@@ -115,7 +115,7 @@
           <option value="100000+">أكثر من 100000</option>
         </select>
       </div>
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4" id="product-grid"></div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 products-grid" id="product-grid"></div>
     </div>
   </section>
   <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
@@ -192,17 +192,13 @@
         productDiv.setAttribute('data-name', product.name);
         productDiv.setAttribute('data-price', product.price);
         productDiv.setAttribute('data-image', product.img);
-        productDiv.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/250?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p><button class="order-btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>`;
+        productDiv.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/250?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p><button class="order-btn" data-i18n="buttons.add_to_cart" onclick="addToCartFromCard(this)"></button>`;
         productGrid.appendChild(productDiv);
       });
       initWishlistForProducts();
+      applyTranslations();
     }
 
-    function orderProduct(name) {
-      const product = productsData.products.find(p => p.name === name);
-      const message = `مرحبًا، أرغب بطلب عطر ${name} بسعر ${product.price} أوقية`;
-      window.open(`https://wa.me/${config.whatsapp.number}?text=${encodeURIComponent(message)}`, '_blank');
-    }
 
     document.getElementById('year').textContent = new Date().getFullYear();
     searchForm.addEventListener('submit', function(e){ e.preventDefault(); displayProducts(); });
