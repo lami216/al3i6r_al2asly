@@ -71,7 +71,7 @@
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <a href="index.html" class="flex items-center space-x-2">
         <i class="fas fa-spray-can text-white text-2xl"></i>
-        <h1 class="text-xl font-bold logo__text">مملكة العطور</h1>
+        <h1 class="text-xl font-bold logo__text" data-i18n="titles.brand"></h1>
       </a>
       <div class="flex items-center gap-4">
         <button id="langToggle" onclick="changeLanguage()" class="text-sm">FR</button>
@@ -106,27 +106,27 @@
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
         <a href="men.html" class="bg-white p-8 rounded-2xl shadow hover:shadow-lg transition flex flex-col items-center border-4 border-blue-300 w-full">
           <i class="fas fa-mars text-5xl text-blue-500 mb-4"></i>
-          <span class="text-xl font-bold">عطور رجالية</span>
+          <span class="text-xl font-bold" data-i18n="categories.men"></span>
         </a>
         <a href="women.html" class="bg-white p-8 rounded-2xl shadow hover:shadow-lg transition flex flex-col items-center border-4 border-pink-300 w-full">
           <i class="fas fa-venus text-5xl text-pink-500 mb-4"></i>
-          <span class="text-xl font-bold">عطور نسائية</span>
+          <span class="text-xl font-bold" data-i18n="categories.women"></span>
         </a>
         <a href="unisex.html" class="bg-white p-8 rounded-2xl shadow hover:shadow-lg transition flex flex-col items-center border-4 border-purple-300 w-full">
           <i class="fas fa-venus-mars text-5xl text-purple-500 mb-4"></i>
-          <span class="text-xl font-bold">عطور مختلطة</span>
+          <span class="text-xl font-bold" data-i18n="categories.unisex"></span>
         </a>
         <a href="all.html" class="bg-white p-8 rounded-2xl shadow hover:shadow-lg transition flex flex-col items-center border-4 border-yellow-300 w-full">
           <i class="fas fa-th-large text-5xl text-yellow-500 mb-4"></i>
-          <span class="text-xl font-bold">جميع العطور</span>
+          <span class="text-xl font-bold" data-i18n="categories.all"></span>
         </a>
         <a href="best.html" class="bg-white p-8 rounded-2xl shadow hover:shadow-lg transition flex flex-col items-center border-4 border-yellow-500 w-full">
           <i class="fas fa-star text-5xl text-yellow-500 mb-4"></i>
-          <span class="text-xl font-bold">الأكثر مبيعاً</span>
+          <span class="text-xl font-bold" data-i18n="categories.best"></span>
         </a>
         <a href="discounts.html" class="bg-white p-8 rounded-2xl shadow hover:shadow-lg transition flex flex-col items-center border-4 border-green-300 w-full">
           <i class="fas fa-percent text-5xl text-green-500 mb-4"></i>
-          <span class="text-xl font-bold">التخفيضات</span>
+          <span class="text-xl font-bold" data-i18n="categories.discounts"></span>
         </a>
       </div>
     </div>
@@ -187,13 +187,18 @@
       filtered.forEach(product => {
         const div = document.createElement('div');
         const isAvailable = product.available;
-        const availabilityText = isAvailable ? 'متوفر' : 'غير متوفر';
+        const availabilityText = isAvailable ? t('availability.yes') : t('availability.no');
         const availabilityClass = isAvailable ? 'yes' : 'no';
         const priceText = product.originalPrice
-          ? `<span class="line-through text-red-500">${product.originalPrice} أوقية</span> <span class="text-yellow-500">${product.price} أوقية</span> (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`
-          : (product.desc.split(' - ')[1] || product.price + ' أوقية');
+          ? `<span class="line-through text-red-500">${formatNumber(product.originalPrice)} ${t('currency')}</span> <span class="text-yellow-500">${formatNumber(product.price)} ${t('currency')}</span> (${formatNumber(Math.round((1 - product.price / product.originalPrice) * 100))}% ${t('labels.discount')})`
+          : `${formatNumber(product.price)} ${t('currency')}`;
         const symbols = productsData.symbols[product.name] || '';
-        const badgeHTML = product.badge ? `<span class=\"absolute top-1 right-1 z-20 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded\">${product.badge}</span>` : '';
+        const badgeMap = {
+          'الأكثر مبيعاً': 'badges.best_seller',
+          'جديد': 'badges.new',
+          'عرض خاص': 'badges.special'
+        };
+        const badgeHTML = product.badge ? `<span class=\"absolute top-1 right-1 z-20 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded\">${t(badgeMap[product.badge] || product.badge)}</span>` : '';
         div.className = 'product';
         div.setAttribute('data-id', product.name);
         div.setAttribute('data-name', product.name);

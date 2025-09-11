@@ -17,7 +17,30 @@
   "labels": {
     "full_name": "الاسم الكامل",
     "phone": "رقم الهاتف",
-    "manual_address": "العنوان اليدوي"
+    "manual_address": "العنوان اليدوي",
+    "discount": "خصم"
+  },
+  "categories": {
+    "men": "عطور رجالية",
+    "women": "عطور نسائية",
+    "unisex": "عطور مختلطة",
+    "all": "جميع العطور",
+    "best": "الأكثر مبيعاً",
+    "discounts": "التخفيضات"
+  },
+  "availability": {
+    "yes": "متوفر",
+    "no": "غير متوفر"
+  },
+  "currency": "أوقية",
+  "badges": {
+    "best_seller": "الأكثر مبيعاً",
+    "new": "جديد",
+    "special": "عرض خاص"
+  },
+  "alerts": {
+    "fill_name_phone": "يرجى إدخال الاسم والهاتف",
+    "fill_address": "يرجى إدخال العنوان"
   },
   "toasts": {
     "added_cart": "تمت إضافة {name} إلى السلة",

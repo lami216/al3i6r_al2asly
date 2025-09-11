@@ -17,7 +17,30 @@
   "labels": {
     "full_name": "Nom complet",
     "phone": "Téléphone",
-    "manual_address": "Adresse manuelle"
+    "manual_address": "Adresse manuelle",
+    "discount": "de réduction"
+  },
+  "categories": {
+    "men": "Parfums hommes",
+    "women": "Parfums femmes",
+    "unisex": "Parfums mixtes",
+    "all": "Tous les parfums",
+    "best": "Meilleures ventes",
+    "discounts": "Promotions"
+  },
+  "availability": {
+    "yes": "Disponible",
+    "no": "Indisponible"
+  },
+  "currency": "ouguiya",
+  "badges": {
+    "best_seller": "Meilleure vente",
+    "new": "Nouveau",
+    "special": "Offre spéciale"
+  },
+  "alerts": {
+    "fill_name_phone": "Veuillez saisir le nom et le téléphone",
+    "fill_address": "Veuillez saisir l'adresse"
   },
   "toasts": {
     "added_cart": "{name} ajouté au panier",
