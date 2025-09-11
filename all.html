@@ -1,10 +1,7 @@
 <!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="">
-  <meta property="og:title" content="">
-  <meta property="og:description" content="">
-  <title></title>
+  <title>مملكة العطور - الواجهة الجديدة</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -80,40 +77,59 @@
     #scrollToTop {
       display: none;
     }  </style>
-  <script src="/js/bootstrap.js" defer></script>
 </head>
-<body class="text-gray-800" data-title-key="pages.all.title" data-desc-key="pages.all.description">
-  <header id="siteHeader" class="bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-lg"></header>
+<body class="text-gray-800">
+  <header class="text-white shadow-lg sticky top-0 z-50 bg-gradient-to-r from-yellow-500 to-yellow-300">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="index.html" class="flex items-center space-x-2">
+        <i class="fas fa-spray-can text-white text-2xl"></i>
+        <h1 class="text-xl font-bold logo__text">مملكة العطور</h1>
+      </a>
+      <div class="flex items-center gap-4">
+        <button id="langToggle" onclick="changeLanguage()" class="text-sm">FR</button>
+        <a href="wishlist.html" class="text-white"><i class="fas fa-heart text-2xl"></i></a>
+        <a href="cart.html" class="relative text-white p-2 bg-transparent">
+          <i class="fas fa-shopping-cart text-2xl"></i>
+          <span id="cartCount" class="hidden absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"></span>
+        </a>
+      </div>
+    </div>
+  </header>
   <section id="bannerSection" class="py-8 text-center">
-    <h2 id="bannerHeading" class="text-4xl font-bold mb-4" data-i18n="pages.all.banner_title"></h2>
-    <p id="bannerSub" class="text-lg" data-i18n="pages.all.banner_sub"></p>
+    <h2 id="bannerHeading" class="text-4xl font-bold mb-4">أرقى أنواع العطور بين يديك</h2>
+    <p id="bannerSub" class="text-lg">عطور أصلية – أسعار مميزة – توصيل فوري</p>
   </section>
   <section class="py-8 bg-white">
     <div class="container mx-auto px-4">
       <h2 id="category-heading" class="text-2xl font-bold mb-6 text-center"></h2>
       <div class="flex flex-col md:flex-row gap-4 justify-between mb-6">
         <form id="searchForm" class="flex bg-white rounded-full overflow-hidden flex-1">
-          <input type="text" id="searchInput" data-i18n-placeholder="search.placeholder" class="px-4 py-2 flex-1 outline-none">
+          <input type="text" id="searchInput" placeholder="ابحث عن عطر..." class="px-4 py-2 flex-1 outline-none">
           <button type="submit" class="px-4 py-2 text-white"><i class="fas fa-search"></i></button>
         </form>
         <select id="priceFilter" class="w-full md:w-1/3 px-4 py-2 rounded-full border border-gray-300">
-          <option value="all" data-i18n="filters.all"></option>
-          <option value="0-20000" data-i18n="filters.0_20000"></option>
-          <option value="20000-50000" data-i18n="filters.20000_50000"></option>
-          <option value="50000-100000" data-i18n="filters.50000_100000"></option>
-          <option value="100000+" data-i18n="filters.100000_plus"></option>
+          <option value="all">جميع الأسعار</option>
+          <option value="0-20000">أقل من 20000</option>
+          <option value="20000-50000">20000 - 50000</option>
+          <option value="50000-100000">50000 - 100000</option>
+          <option value="100000+">أكثر من 100000</option>
         </select>
       </div>
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 products-grid" id="product-grid"></div>
     </div>
   </section>
-  <footer id="siteFooter" class="bg-yellow-600 text-white text-center py-6 mt-12"></footer>
+  <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
+    <p>&copy; <span id="year"></span> مملكة العطور - جميع الحقوق محفوظة</p>
+  </footer>
   <a href="#" id="scrollToTop" class="fixed bottom-5 left-5 bg-yellow-400 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-500 transition z-50">
     <i class="fas fa-arrow-up"></i>
   </a>    <div id="cartItems" class="p-4 space-y-2 overflow-y-auto"></div>
   </div>
+
+  <script src="config.js"></script>
+  <script src="i18n.js"></script>
   <script src="products-data.js"></script>
-  <script src="cart.js" defer></script>
+  <script src="cart.js"></script>
   <script>
     const productGrid = document.getElementById('product-grid');
     const searchInput = document.getElementById('searchInput');
@@ -183,7 +199,7 @@
     }
 
 
-    
+    document.getElementById('year').textContent = new Date().getFullYear();
     searchForm.addEventListener('submit', function(e){ e.preventDefault(); displayProducts(); });
     searchInput.addEventListener('input', displayProducts);
     priceFilter.addEventListener('change', displayProducts);
