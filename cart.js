@@ -63,6 +63,7 @@ function removeFromCart(id){
   cart = cart.filter(item => item.id !== id);
   saveCart();
   renderCart();
+  showToast(t('toasts.removed_cart'));
 }
 
 function renderCart(){
@@ -214,8 +215,13 @@ function confirmCheckout(){
   const message = buildWhatsAppMessage(template, { items: itemsStr, total, name, phone, address });
   const phoneNum = config.whatsapp && config.whatsapp.number ? config.whatsapp.number : '';
   const url = `https://wa.me/${phoneNum}?text=${encodeURIComponent(message)}`;
-  window.open(url, '_blank');
-  showToast(t('toasts.checkout_success'));
+  try{
+    window.open(url, '_blank');
+    showToast(t('toasts.checkout_success'));
+  }catch(e){
+    showToast(t('toasts.checkout_failed'));
+    return;
+  }
   cart = []; saveCart(); renderCart(); updateCartCount();
   checkoutData = {}; saveCheckoutData();
   setTimeout(()=>{ window.location.href = 'index.html'; }, 500);

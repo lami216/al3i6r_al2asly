@@ -23,7 +23,9 @@
     "added_cart": "{name} ajouté au panier",
     "added_wishlist": "Ajouté aux favoris",
     "removed_wishlist": "Retiré des favoris",
-    "checkout_success": "Commande envoyée via WhatsApp"
+    "checkout_success": "Commande envoyée via WhatsApp",
+    "removed_cart": "Retiré du panier",
+    "checkout_failed": "Échec de l'envoi de la commande"
   },
   "cart": {
     "empty": "Le panier est vide",
@@ -32,5 +34,56 @@
   },
   "wishlist": {
     "empty": "Aucun article dans les favoris"
+  },
+  "home": {
+    "hero_title": "Bienvenue au Royaume des Parfums",
+    "hero_text": "Nous vous proposons les meilleurs parfums authentiques avec livraison rapide à des prix avantageux",
+    "categories_title": "Catégories principales",
+    "about_title": "À propos de la boutique",
+    "about_text": "Royaume des Parfums est une boutique fiable offrant les meilleurs parfums originaux avec un service client de qualité.",
+    "footer_rights": "Tous droits réservés"
+  },
+  "footer": {
+    "links": {
+      "about": "À propos",
+      "contact": "Contactez-nous",
+      "privacy": "Politique de confidentialité",
+      "terms": "Conditions générales"
+    }
+  },
+  "search": {
+    "placeholder": "Rechercher..."
+  },
+  "pages": {
+    "home": {
+      "title": "Accueil",
+      "description": "Nous vous proposons les meilleurs parfums authentiques avec livraison rapide à des prix avantageux"
+    },
+    "about": {
+      "title": "À propos",
+      "content": "Royaume des Parfums est une boutique fiable offrant les meilleurs parfums originaux avec un service client de qualité",
+      "description": "Découvrir Royaume des Parfums"
+    },
+    "contact": {
+      "title": "Contactez-nous",
+      "content": "Contactez-nous via WhatsApp",
+      "description": "Entrer en contact avec notre équipe"
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "content": "Nous respectons votre vie privée et ne partageons pas vos données",
+      "description": "Politique de confidentialité de Royaume des Parfums"
+    },
+    "terms": {
+      "title": "Conditions générales",
+      "content": "En utilisant le site, vous acceptez les conditions suivantes",
+      "description": "Conditions d'utilisation de Royaume des Parfums"
+    },
+    "not_found": {
+      "title": "Page non trouvée",
+      "message": "Page non trouvée — Retour à l’accueil",
+      "back_home": "Retour à l’accueil",
+      "description": "La page demandée est introuvable"
+    }
   }
 }

@@ -29,6 +29,14 @@
       const key = el.getAttribute('data-i18n');
       el.textContent = t(key);
     });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+      const key = el.getAttribute('data-i18n-placeholder');
+      el.setAttribute('placeholder', t(key));
+    });
+    document.querySelectorAll('[data-i18n-value]').forEach(el=>{
+      const key = el.getAttribute('data-i18n-value');
+      el.value = t(key);
+    });
   }
   window.applyTranslations = applyTranslations;
 
@@ -48,6 +56,7 @@
     }
     if(typeof renderCart === 'function') renderCart();
     if(typeof initWishlistForProducts === 'function') initWishlistForProducts();
+    if(typeof window.updateSEO === 'function') window.updateSEO();
   }
   window.changeLanguage = function(){
     const idx = langs.indexOf(currentLang);
