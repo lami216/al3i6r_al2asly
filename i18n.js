@@ -52,7 +52,7 @@
 
   async function loadLangData(lang){
     try{
-      const res = await fetch('lang/'+lang+'.json');
+      const res = await fetch('i18n/'+lang+'.json');
       return await res.json();
     }catch(e){
       return {};

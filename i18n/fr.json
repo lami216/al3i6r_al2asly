@@ -3,7 +3,13 @@
     "brand": "Royaume des Parfums",
     "cart": "Panier",
     "wishlist": "Favoris",
-    "checkout": "Résumé de la commande"
+    "checkout": "Résumé de la commande",
+    "men": "Parfums hommes",
+    "women": "Parfums femmes",
+    "unisex": "Parfums mixtes",
+    "all": "Tous les parfums",
+    "best": "Meilleures ventes",
+    "discounts": "Promotions"
   },
   "buttons": {
     "checkout": "Passer la commande",
@@ -12,7 +18,10 @@
     "view_map": "Voir sur la carte",
     "continue_shopping": "Continuer les achats",
     "cancel": "Annuler et revenir au panier",
-    "add_to_cart": "Ajouter au panier"
+    "add_to_cart": "Ajouter au panier",
+    "order_now": "Commander maintenant",
+    "add_to_wishlist": "Ajouter aux favoris",
+    "best_sellers": "Meilleures ventes"
   },
   "labels": {
     "full_name": "Nom complet",
@@ -81,6 +90,38 @@
     "home": {
       "title": "Accueil",
       "description": "Nous vous proposons les meilleurs parfums authentiques avec livraison rapide à des prix avantageux"
+    },
+    "cart": {
+      "title": "Panier",
+      "description": "Vérifiez vos articles avant l'achat"
+    },
+    "wishlist": {
+      "title": "Favoris",
+      "description": "Liste des parfums ajoutés aux favoris"
+    },
+    "discounts": {
+      "title": "Promotions",
+      "description": "Parfums en promotion"
+    },
+    "best": {
+      "title": "Meilleures ventes",
+      "description": "Les parfums les plus vendus"
+    },
+    "men": {
+      "title": "Parfums hommes",
+      "description": "Large choix de parfums pour hommes"
+    },
+    "women": {
+      "title": "Parfums femmes",
+      "description": "Les meilleurs parfums pour femmes"
+    },
+    "unisex": {
+      "title": "Parfums mixtes",
+      "description": "Parfums adaptés aux deux sexes"
+    },
+    "all": {
+      "title": "Tous les parfums",
+      "description": "Tous les parfums disponibles"
     },
     "about": {
       "title": "À propos",
