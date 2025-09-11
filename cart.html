@@ -14,7 +14,7 @@
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <a href="index.html" class="flex items-center space-x-2">
         <i class="fas fa-spray-can text-white text-2xl"></i>
-        <h1 class="text-xl font-bold logo__text">مملكة العطور</h1>
+        <h1 class="text-xl font-bold logo__text" data-i18n="titles.brand"></h1>
       </a>
       <div class="flex items-center gap-4">
         <button id="langToggle" onclick="changeLanguage()" class="text-sm">FR</button>
@@ -33,7 +33,7 @@
     </div>
   </section>
   <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
-    <p>&copy; <span id="year"></span> مملكة العطور - جميع الحقوق محفوظة</p>
+    <p>&copy; <span id="year"></span> <span data-i18n="titles.brand"></span> - <span data-i18n="home.footer_rights"></span></p>
   </footer>
   <script src="config.js"></script>
   <script src="i18n.js"></script>

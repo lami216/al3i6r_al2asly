@@ -82,14 +82,14 @@ function renderCart(){
       <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain rounded"/>
       <div class="flex-1">
         <p class="text-sm">${item.name}</p>
-        <p class="text-xs text-yellow-600 font-bold">${item.price} أوقية × ${item.qty}</p>
+        <p class="text-xs text-yellow-600 font-bold">${formatNumber(item.price)} ${t('currency')} × ${formatNumber(item.qty)}</p>
       </div>
       <button class="text-red-500 text-xl" onclick="removeFromCart('${item.id}')">&times;</button>
     </div>`;
   }).join('');
   container.innerHTML += `<div class="py-4 flex justify-between font-bold">
       <span>${t('cart.total')}</span>
-      <span class="text-yellow-600">${total} أوقية</span>
+      <span class="text-yellow-600">${formatNumber(total)} ${t('currency')}</span>
     </div>
     <div class="flex gap-2">
       <a href="index.html" class="flex-1 bg-gray-200 text-gray-800 py-2 rounded text-center">${t('buttons.continue_shopping')}</a>
@@ -143,7 +143,7 @@ function addToCartFromCard(btn){
 }
 
 function buildCheckoutItems(){
-  return cart.map(item=>`<li class="flex justify-between"><span>${item.name} ×${item.qty}</span><span>${item.price*item.qty} أوقية</span></li>`).join('');
+  return cart.map(item=>`<li class="flex justify-between"><span>${item.name} ×${formatNumber(item.qty)}</span><span>${formatNumber(item.price*item.qty)} ${t('currency')}</span></li>`).join('');
 }
 
 function initCheckoutPage(){
@@ -152,7 +152,7 @@ function initCheckoutPage(){
   if(cart.length === 0){ window.location.href = 'cart.html'; return; }
   summary.innerHTML = buildCheckoutItems();
   const total = cart.reduce((s,i)=> s + Number(i.price)*i.qty,0);
-  summary.innerHTML += `<div class="py-2 flex justify-between font-bold"><span>${t('cart.total')}</span><span class="text-yellow-600">${total} أوقية</span></div>`;
+  summary.innerHTML += `<div class="py-2 flex justify-between font-bold"><span>${t('cart.total')}</span><span class="text-yellow-600">${formatNumber(total)} ${t('currency')}</span></div>`;
   const nameInput = document.getElementById('coName');
   const phoneInput = document.getElementById('coPhone');
   const manual = document.getElementById('manualAddress');
@@ -201,18 +201,18 @@ function confirmCheckout(){
   const name = document.getElementById('coName').value.trim();
   const phone = document.getElementById('coPhone').value.trim();
   const manual = document.getElementById('manualAddress');
-  if(!name || !phone){ alert('يرجى إدخال الاسم والهاتف'); return; }
+  if(!name || !phone){ alert(t('alerts.fill_name_phone')); return; }
   if(!checkoutData.lat){
     const address = manual.value.trim();
-    if(!address){ alert('يرجى إدخال العنوان'); return; }
+    if(!address){ alert(t('alerts.fill_address')); return; }
     checkoutData.address = address;
   }
   checkoutData.name = name; checkoutData.phone = phone; saveCheckoutData();
   const total = cart.reduce((s,i)=> s + Number(i.price)*i.qty,0);
-  const itemsStr = cart.map(i=>`- ${i.name} ×${i.qty} — ${i.price} أوقية`).join('\n');
+  const itemsStr = cart.map(i=>`- ${i.name} ×${formatNumber(i.qty)} — ${formatNumber(i.price)} ${t('currency')}`).join('\n');
   const address = checkoutData.lat ? `https://maps.google.com/?q=${checkoutData.lat},${checkoutData.lng}` : (checkoutData.address||'');
   const template = config.whatsapp && config.whatsapp.template ? config.whatsapp.template : '';
-  const message = buildWhatsAppMessage(template, { items: itemsStr, total, name, phone, address });
+  const message = buildWhatsAppMessage(template, { items: itemsStr, total: formatNumber(total), name, phone, address });
   const phoneNum = config.whatsapp && config.whatsapp.number ? config.whatsapp.number : '';
   const url = `https://wa.me/${phoneNum}?text=${encodeURIComponent(message)}`;
   try{

@@ -5,6 +5,8 @@
   let currentLang = localStorage.getItem('ui_lang') || langs[0];
   const htmlEl = document.documentElement;
   window.i18nData = {};
+  const fallbackLang = 'fr';
+  let fallbackData = {};
 
   function setDir(lang){
     htmlEl.lang = lang;
@@ -12,8 +14,11 @@
   }
 
   function t(key, params={}){
-    let parts = key.split('.');
+    const parts = key.split('.');
     let res = parts.reduce((o,p)=> o ? o[p] : undefined, window.i18nData);
+    if(res === undefined && fallbackData){
+      res = parts.reduce((o,p)=> o ? o[p] : undefined, fallbackData);
+    }
     if(typeof res === 'string'){
       for(const k in params){
         res = res.replace(new RegExp('\\{'+k+'\\}','g'), params[k]);
@@ -23,6 +28,11 @@
     return key;
   }
   window.t = t;
+
+  function formatNumber(num){
+    return Number(num).toLocaleString('fr-FR');
+  }
+  window.formatNumber = formatNumber;
 
   function applyTranslations(){
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -40,11 +50,22 @@
   }
   window.applyTranslations = applyTranslations;
 
-  async function loadLang(lang){
+  async function loadLangData(lang){
     try{
-      const res = await fetch('i18n/'+lang+'.json');
-      window.i18nData = await res.json();
-    }catch(e){ window.i18nData = {}; }
+      const res = await fetch('lang/'+lang+'.json');
+      return await res.json();
+    }catch(e){
+      return {};
+    }
+  }
+
+  async function loadLang(lang){
+    window.i18nData = await loadLangData(lang);
+    if(lang !== fallbackLang){
+      fallbackData = await loadLangData(fallbackLang);
+    }else{
+      fallbackData = {};
+    }
     currentLang = lang;
     localStorage.setItem('ui_lang', lang);
     setDir(lang);
