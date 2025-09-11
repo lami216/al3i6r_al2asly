@@ -1,0 +1,33 @@
+{
+  "titles": {
+    "brand": "Royaume des Parfums",
+    "cart": "Panier",
+    "wishlist": "Favoris",
+    "checkout": "Résumé de la commande"
+  },
+  "buttons": {
+    "checkout": "Passer la commande",
+    "confirm": "Confirmer et envoyer via WhatsApp",
+    "use_my_location": "Utiliser ma position",
+    "view_map": "Voir sur la carte"
+  },
+  "labels": {
+    "full_name": "Nom complet",
+    "phone": "Téléphone",
+    "manual_address": "Adresse manuelle"
+  },
+  "toasts": {
+    "added_cart": "{name} ajouté au panier",
+    "added_wishlist": "Ajouté aux favoris",
+    "removed_wishlist": "Retiré des favoris",
+    "checkout_success": "Commande envoyée via WhatsApp"
+  },
+  "cart": {
+    "empty": "Le panier est vide",
+    "total": "Total:",
+    "buy_all": "Tout acheter"
+  },
+  "wishlist": {
+    "empty": "Aucun article dans les favoris"
+  }
+}
