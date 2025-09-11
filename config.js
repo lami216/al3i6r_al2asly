@@ -5,7 +5,6 @@
       number: '',
       template: 'السلام عليكم، أريد: {{items}}\nالإجمالي: {{total}} أوقية\nالاسم: {{name}}\nالهاتف: {{phone}}\nالعنوان: {{address}}'
     },
-    languages: ['ar','fr'],
     ui: { cardsPerRowMobile: 2 }
   };
 
@@ -51,6 +50,203 @@
     }
   }
 
-  applyBranding(cfg);
-  applyUISettings(cfg);
+  window.i18nData = {
+    "titles": {
+      "brand": "العطر الأصلي",
+      "cart": "السلة",
+      "wishlist": "المفضّلة",
+      "checkout": "ملخّص الطلب",
+      "men": "عطور رجالية",
+      "women": "عطور نسائية",
+      "unisex": "عطور مختلطة",
+      "all": "جميع العطور",
+      "best": "الأكثر مبيعاً",
+      "discounts": "التخفيضات"
+    },
+    "buttons": {
+      "checkout": "إتمام الطلب",
+      "confirm": "تأكيد وإرسال عبر واتساب",
+      "use_my_location": "استخدام موقعي الحالي",
+      "view_map": "عرض على الخريطة",
+      "continue_shopping": "متابعة التسوق",
+      "cancel": "إلغاء والعودة للسلة",
+      "add_to_cart": "أضف للسلة",
+      "order_now": "اطلب الآن",
+      "add_to_wishlist": "إضافة إلى المفضلة",
+      "best_sellers": "الأكثر مبيعاً"
+    },
+    "labels": {
+      "full_name": "الاسم الكامل",
+      "phone": "رقم الهاتف",
+      "manual_address": "العنوان اليدوي",
+      "discount": "خصم"
+    },
+    "categories": {
+      "men": "عطور رجالية",
+      "women": "عطور نسائية",
+      "unisex": "عطور مختلطة",
+      "all": "جميع العطور",
+      "best": "الأكثر مبيعاً",
+      "discounts": "التخفيضات"
+    },
+    "availability": {
+      "yes": "متوفر",
+      "no": "غير متوفر"
+    },
+    "currency": "أوقية",
+    "badges": {
+      "best_seller": "الأكثر مبيعاً",
+      "new": "جديد",
+      "special": "عرض خاص"
+    },
+    "alerts": {
+      "fill_name_phone": "يرجى إدخال الاسم والهاتف",
+      "fill_address": "يرجى إدخال العنوان"
+    },
+    "toasts": {
+      "added_cart": "تمت إضافة {name} إلى السلة",
+      "added_wishlist": "أُضيف للمفضّلة",
+      "removed_wishlist": "أُزيل من المفضّلة",
+      "checkout_success": "تم إرسال الطلب عبر واتساب",
+      "removed_cart": "أُزيل من السلة",
+      "checkout_failed": "فشل إرسال الطلب"
+    },
+    "cart": {
+      "empty": "سلة التسوق فارغة",
+      "total": "الإجمالي:",
+      "buy_all": "شراء الجميع"
+    },
+    "wishlist": {
+      "empty": "لا توجد عناصر في المفضّلة"
+    },
+    "home": {
+      "hero_title": "أهلاً بكم في العطر الأصلي",
+      "hero_text": "نوفر لكم أجود أنواع العطور الأصلية بأسعار مميزة وتوصيل سريع لجميع المناطق",
+      "categories_title": "الفئات الرئيسية",
+      "about_title": "نبذة عن المتجر",
+      "about_text": "العطر الأصلي متجر موثوق يوفر لعملائه أفضل العطور العالمية الأصلية مع ضمان الجودة وخدمة عملاء مميزة.",
+      "footer_rights": "جميع الحقوق محفوظة"
+    },
+    "footer": {
+      "links": {
+        "about": "من نحن",
+        "contact": "تواصل معنا",
+        "privacy": "سياسة الخصوصية",
+        "terms": "الشروط والأحكام"
+      }
+    },
+    "search": {
+      "placeholder": "ابحث..."
+    },
+    "pages": {
+      "home": {
+        "title": "الصفحة الرئيسية",
+        "description": "نوفر لكم أجود أنواع العطور الأصلية بأسعار مميزة وتوصيل سريع لجميع المناطق"
+      },
+      "cart": {
+        "title": "السلة",
+        "description": "مراجعة منتجاتك المختارة قبل الدفع"
+      },
+      "wishlist": {
+        "title": "المفضّلة",
+        "description": "قائمة العطور التي أضفتها للمفضّلة"
+      },
+      "discounts": {
+        "title": "التخفيضات",
+        "description": "عطور بخصومات خاصة"
+      },
+      "best": {
+        "title": "الأكثر مبيعاً",
+        "description": "أفضل العطور مبيعاً"
+      },
+      "men": {
+        "title": "عطر رجالية",
+        "description": "تشكيلة واسعة من العطور الرجالية"
+      },
+      "women": {
+        "title": "عطور نسائية",
+        "description": "أفضل العطور النسائية"
+      },
+      "unisex": {
+        "title": "عطور مختلطة",
+        "description": "عطور تناسب الجنسين"
+      },
+      "all": {
+        "title": "جميع العطور",
+        "description": "كل العطور المتوفرة"
+      },
+      "about": {
+        "title": "من نحن",
+        "content": "العطر الأصلي متجر موثوق يوفر أفضل العطور العالمية الأصلية مع ضمان الجودة وخدمة عملاء مميزة",
+        "description": "تعرف على العطر الأصلي"
+      },
+      "contact": {
+        "title": "تواصل معنا",
+        "content": "راسلنا عبر الواتساب",
+        "description": "تواصل مع فريقنا"
+      },
+      "privacy": {
+        "title": "سياسة الخصوصية",
+        "content": "نحترم خصوصيتك ولا نشارك بياناتك مع أي طرف ثالث",
+        "description": "سياسة الخصوصية للعطر الأصلي"
+      },
+      "terms": {
+        "title": "الشروط والأحكام",
+        "content": "باستخدامك للموقع فإنك توافق على الشروط والأحكام التالية",
+        "description": "شروط استخدام العطر الأصلي"
+      },
+      "not_found": {
+        "title": "الصفحة غير موجودة",
+        "message": "الصفحة غير موجودة — العودة للرئيسية",
+        "back_home": "العودة للرئيسية",
+        "description": "لم يتم العثور على الصفحة المطلوبة"
+      }
+    }
+  };
+
+  function t(key, params={}){
+    const parts = key.split('.');
+    let res = parts.reduce((o,p)=> o ? o[p] : undefined, window.i18nData);
+    if(typeof res === 'string'){
+      for(const k in params){
+        res = res.replace(new RegExp('\\{'+k+'\\}','g'), params[k]);
+      }
+      return res;
+    }
+    return key;
+  }
+  window.t = t;
+
+  function formatNumber(num){
+    return Number(num).toLocaleString('fr-FR');
+  }
+  window.formatNumber = formatNumber;
+
+  function applyTranslations(){
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      el.textContent = t(key);
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+      const key = el.getAttribute('data-i18n-placeholder');
+      el.setAttribute('placeholder', t(key));
+    });
+    document.querySelectorAll('[data-i18n-value]').forEach(el=>{
+      const key = el.getAttribute('data-i18n-value');
+      el.value = t(key);
+    });
+  }
+  window.applyTranslations = applyTranslations;
+
+  function init(){
+    window.i18nData.titles.brand = cfg.brand && cfg.brand.name ? cfg.brand.name : window.i18nData.titles.brand;
+    applyBranding(cfg);
+    applyUISettings(cfg);
+    applyTranslations();
+    if(typeof renderCart === 'function') renderCart();
+    if(typeof initWishlistForProducts === 'function') initWishlistForProducts();
+    if(typeof window.updateSEO === 'function') window.updateSEO();
+  }
+
+  init();
 })();
