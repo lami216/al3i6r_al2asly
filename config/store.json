@@ -1,12 +1,11 @@
 {
   "brand": {
-    "name": "مملكة العطور"
+    "name": "العطر الأصلي"
   },
   "whatsapp": {
     "number": "+22241380130",
     "template": "السلام عليكم، أريد: {{items}}\nالإجمالي: {{total}} أوقية\nالاسم: {{name}}\nالهاتف: {{phone}}\nالعنوان: {{address}}"
   },
-  "languages": ["ar", "fr"],
   "ui": {
     "cardsPerRowMobile": 2
   }
