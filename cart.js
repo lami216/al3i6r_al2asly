@@ -211,9 +211,9 @@ function confirmCheckout(){
   const total = cart.reduce((s,i)=> s + Number(i.price)*i.qty,0);
   const itemsStr = cart.map(i=>`- ${i.name} ×${formatNumber(i.qty)} — ${formatNumber(i.price)} ${t('currency')}`).join('\n');
   const address = checkoutData.lat ? `https://maps.google.com/?q=${checkoutData.lat},${checkoutData.lng}` : (checkoutData.address||'');
-  const template = config.whatsapp && config.whatsapp.template ? config.whatsapp.template : '';
+  const template = AppConfig.whatsapp && AppConfig.whatsapp.template ? AppConfig.whatsapp.template : '';
   const message = buildWhatsAppMessage(template, { items: itemsStr, total: formatNumber(total), name, phone, address });
-  const phoneNum = config.whatsapp && config.whatsapp.number ? config.whatsapp.number : '';
+  const phoneNum = AppConfig.whatsapp && AppConfig.whatsapp.number ? AppConfig.whatsapp.number : '';
   const url = `https://wa.me/${phoneNum}?text=${encodeURIComponent(message)}`;
   try{
     window.open(url, '_blank');

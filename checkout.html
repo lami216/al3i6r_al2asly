@@ -1,34 +1,23 @@
 <!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title data-i18n="titles.checkout">ملخّص الطلب</title>
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <title></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body { font-family: sans-serif; background-color: #f8fafc; overflow-x: hidden; }
   </style>
+  <script src="/js/bootstrap.js" defer></script>
 </head>
-<body class="text-gray-800">
-  <header class="bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-lg">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <a href="index.html" class="flex items-center space-x-2">
-        <i class="fas fa-spray-can text-white text-2xl"></i>
-        <h1 class="text-xl font-bold logo__text">مملكة العطور</h1>
-      </a>
-      <div class="flex items-center gap-4">
-        <button id="langToggle" onclick="changeLanguage()" class="text-sm">FR</button>
-        <a href="wishlist.html" class="text-white"><i class="fas fa-heart text-2xl"></i></a>
-        <a href="cart.html" class="relative text-white p-2 bg-transparent">
-          <i class="fas fa-shopping-cart text-2xl"></i>
-          <span id="cartCount" class="hidden absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"></span>
-        </a>
-      </div>
-    </div>
-  </header>
+<body class="text-gray-800" data-title-key="pages.checkout.title" data-desc-key="pages.checkout.description">
+  <header id="siteHeader" class="bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-lg"></header>
   <section class="py-8">
     <div class="container mx-auto px-4 max-w-xl">
-      <h2 class="text-3xl font-bold mb-6 text-center text-yellow-700" data-i18n="titles.checkout">ملخّص الطلب</h2>
+      <h2 class="text-3xl font-bold mb-6 text-center text-yellow-700" data-i18n="titles.checkout"></h2>
       <div id="checkoutSummary" class="mb-4 bg-white p-4 rounded shadow space-y-1"></div>
       <form class="bg-white p-4 rounded shadow space-y-2">
         <input id="coName" class="w-full border p-2" required>
@@ -36,25 +25,18 @@
         <button type="button" id="useLocation" class="bg-blue-500 text-white px-3 py-2 rounded"></button>
         <div id="mapPreview" class="hidden mb-2">
           <iframe id="mapFrame" class="w-full h-40" loading="lazy"></iframe>
-          <a id="viewMap" href="#" target="_blank" class="text-blue-600 underline" data-i18n="buttons.view_map">عرض على الخريطة</a>
+          <a id="viewMap" href="#" target="_blank" class="text-blue-600 underline" data-i18n="buttons.view_map"></a>
         </div>
         <input id="manualAddress" class="hidden w-full border p-2" required>
         <div class="flex gap-2 pt-2">
-          <button type="button" id="confirmCheckout" class="flex-1 bg-green-500 text-white py-2 rounded" data-i18n="buttons.confirm">تأكيد وإرسال عبر واتساب</button>
-          <a href="cart.html" id="cancelCheckout" class="flex-1 bg-gray-300 text-gray-800 py-2 rounded text-center" data-i18n="buttons.cancel">إلغاء والعودة للسلة</a>
+          <button type="button" id="confirmCheckout" class="flex-1 bg-green-500 text-white py-2 rounded" data-i18n="buttons.confirm"></button>
+          <a href="cart.html" id="cancelCheckout" class="flex-1 bg-gray-300 text-gray-800 py-2 rounded text-center" data-i18n="buttons.cancel"></a>
         </div>
       </form>
     </div>
   </section>
-  <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
-    <p>&copy; <span id="year"></span> مملكة العطور - جميع الحقوق محفوظة</p>
-  </footer>
-  <script src="config.js"></script>
-  <script src="i18n.js"></script>
+  <footer id="siteFooter" class="bg-yellow-600 text-white text-center py-6 mt-12"></footer>
   <script src="products-data.js"></script>
-  <script src="cart.js"></script>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script src="cart.js" defer></script>
 </body>
 </html>
