@@ -90,7 +90,10 @@ function renderCart(){
       <span>${t('cart.total')}</span>
       <span class="text-yellow-600">${total} أوقية</span>
     </div>
-    <button onclick="checkout()" class="w-full bg-green-500 text-white py-2 rounded">${t('cart.buy_all')}</button>`;
+    <div class="flex gap-2">
+      <a href="index.html" class="flex-1 bg-gray-200 text-gray-800 py-2 rounded text-center">${t('buttons.continue_shopping')}</a>
+      <a href="checkout.html" class="flex-1 bg-green-500 text-white py-2 rounded text-center">${t('buttons.checkout')}</a>
+    </div>`;
   updateCartCount();
 }
 
@@ -107,7 +110,7 @@ function showToast(message, withCart){
   if(existing) existing.remove();
   const msg = document.createElement('div');
   msg.id = 'cartToast';
-  msg.innerHTML = withCart ? `<span>${message}</span><button onclick="toggleCart()">${t('titles.cart')}</button>` : `<span>${message}</span>`;
+  msg.innerHTML = withCart ? `<span>${message}</span><a href="cart.html" class="underline">${t('titles.cart')}</a>` : `<span>${message}</span>`;
   document.body.appendChild(msg);
   setTimeout(()=>{ msg.classList.add('fade-out'); setTimeout(()=>msg.remove(),300); },2500);
 }
@@ -128,11 +131,6 @@ function initWishlistForProducts(){
   });
 }
 
-function toggleCart(){
-  const drawer = document.getElementById('cartDrawer');
-  if(drawer) drawer.classList.toggle('open');
-}
-
 function addToCartFromCard(btn){
   if(addCooldown) return;
   addCooldown = true;
@@ -143,49 +141,38 @@ function addToCartFromCard(btn){
   addToCart(product);
 }
 
-// Checkout modal creation
 function buildCheckoutItems(){
   return cart.map(item=>`<li class="flex justify-between"><span>${item.name} ×${item.qty}</span><span>${item.price*item.qty} أوقية</span></li>`).join('');
 }
 
-function openCheckoutModal(){
-  let modal = document.getElementById('checkoutModal');
-  if(!modal){
-    modal = document.createElement('div');
-    modal.id = 'checkoutModal';
-    modal.className = 'fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50';
-    modal.innerHTML = `<div class="bg-white p-4 rounded w-11/12 max-w-md max-h-full overflow-y-auto">
-      <h2 class="text-xl font-bold mb-2" data-i18n="titles.checkout">${t('titles.checkout')}</h2>
-      <ul id="checkoutSummary" class="mb-4 space-y-1"></ul>
-      <input id="coName" class="w-full border p-2 mb-2" placeholder="${t('labels.full_name')}">
-      <input id="coPhone" class="w-full border p-2 mb-2" placeholder="${t('labels.phone')}">
-      <button id="useLocation" class="bg-blue-500 text-white px-3 py-2 rounded mb-2">${t('buttons.use_my_location')}</button>
-      <div id="mapPreview" class="hidden mb-2">
-        <iframe id="mapFrame" class="w-full h-40" loading="lazy"></iframe>
-        <a id="viewMap" href="#" target="_blank" class="text-blue-600 underline" data-i18n="buttons.view_map">${t('buttons.view_map')}</a>
-      </div>
-      <input id="manualAddress" class="w-full border p-2 mb-2 hidden" placeholder="${t('labels.manual_address')}">
-      <button id="confirmCheckout" class="w-full bg-green-500 text-white py-2 rounded">${t('buttons.confirm')}</button>
-    </div>`;
-    document.body.appendChild(modal);
-
-    document.getElementById('useLocation').onclick = getLocation;
-    document.getElementById('confirmCheckout').onclick = confirmCheckout;
-  }
-  document.getElementById('checkoutSummary').innerHTML = buildCheckoutItems();
+function initCheckoutPage(){
+  const summary = document.getElementById('checkoutSummary');
+  if(!summary) return;
+  if(cart.length === 0){ window.location.href = 'cart.html'; return; }
+  summary.innerHTML = buildCheckoutItems();
+  const total = cart.reduce((s,i)=> s + Number(i.price)*i.qty,0);
+  summary.innerHTML += `<div class="py-2 flex justify-between font-bold"><span>${t('cart.total')}</span><span class="text-yellow-600">${total} أوقية</span></div>`;
   const nameInput = document.getElementById('coName');
   const phoneInput = document.getElementById('coPhone');
-  const manualAddress = document.getElementById('manualAddress');
+  const manual = document.getElementById('manualAddress');
   nameInput.value = checkoutData.name || '';
   phoneInput.value = checkoutData.phone || '';
-  manualAddress.value = checkoutData.address || '';
+  manual.value = checkoutData.address || '';
+  nameInput.placeholder = t('labels.full_name');
+  phoneInput.placeholder = t('labels.phone');
+  manual.placeholder = t('labels.manual_address');
   document.getElementById('mapPreview').classList.add('hidden');
   if(checkoutData.lat && checkoutData.lng){
     showMap(checkoutData.lat, checkoutData.lng);
-  }else if(checkoutData.address){
-    manualAddress.classList.remove('hidden');
+  } else {
+    manual.classList.remove('hidden');
   }
-  modal.classList.remove('hidden');
+  const locBtn = document.getElementById('useLocation');
+  locBtn.textContent = t('buttons.use_my_location');
+  const confirmBtn = document.getElementById('confirmCheckout');
+  confirmBtn.textContent = t('buttons.confirm');
+  locBtn.onclick = ()=>{ locBtn.disabled = true; getLocation(); };
+  confirmBtn.onclick = confirmCheckout;
 }
 
 function getLocation(){
@@ -213,7 +200,12 @@ function confirmCheckout(){
   const name = document.getElementById('coName').value.trim();
   const phone = document.getElementById('coPhone').value.trim();
   const manual = document.getElementById('manualAddress');
-  if(!checkoutData.lat){ checkoutData.address = manual.value.trim(); }
+  if(!name || !phone){ alert('يرجى إدخال الاسم والهاتف'); return; }
+  if(!checkoutData.lat){
+    const address = manual.value.trim();
+    if(!address){ alert('يرجى إدخال العنوان'); return; }
+    checkoutData.address = address;
+  }
   checkoutData.name = name; checkoutData.phone = phone; saveCheckoutData();
   const total = cart.reduce((s,i)=> s + Number(i.price)*i.qty,0);
   let msg = 'طلب جديد:\n';
@@ -227,10 +219,11 @@ function confirmCheckout(){
   window.open(url, '_blank');
   showToast(t('toasts.checkout_success'));
   cart = []; saveCart(); renderCart(); updateCartCount();
-  document.getElementById('checkoutModal').classList.add('hidden');
+  checkoutData = {}; saveCheckoutData();
+  setTimeout(()=>{ window.location.href = 'index.html'; }, 500);
 }
 
-function checkout(){ if(cart.length>0) openCheckoutModal(); }
+function checkout(){ if(cart.length>0) window.location.href="checkout.html"; }
 
 // initialize
 loadCart();
@@ -239,3 +232,4 @@ loadCheckoutData();
 renderCart();
 updateCartCount();
 initWishlistForProducts();
+initCheckoutPage();

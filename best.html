@@ -18,10 +18,7 @@
     .product button.order-btn { background-color: #facc15; color: #1f2937; border: none; padding: 0.4rem 0.6rem; border-radius: 12px; cursor: pointer; font-size: 0.85rem; transition: 0.3s; }
     .product button.order-btn:hover { background-color: #eab308; }
     .symbol { font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.25rem; }
-    .product p { overflow-wrap: anywhere; }
-    #cartDrawer { position: fixed; top: 0; right: 0; width: 20rem; max-width: 80%; height: 100%; background: white; box-shadow: -2px 0 10px rgba(0,0,0,0.2); transform: translateX(100%); transition: transform 0.3s ease; z-index: 1000; }
-    #cartDrawer.open { transform: translateX(0); }
-  </style>
+    .product p { overflow-wrap: anywhere; }  </style>
 </head>
 <body class="text-gray-800">
   <header class="bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-lg">
@@ -33,10 +30,10 @@
       <div class="flex items-center gap-4">
         <button id="langToggle" onclick="changeLanguage()" class="text-sm">FR</button>
         <a href="wishlist.html" class="text-white"><i class="fas fa-heart text-2xl"></i></a>
-        <button onclick="toggleCart()" class="relative text-white p-2 bg-transparent">
+        <a href="cart.html" class="relative text-white p-2 bg-transparent">
           <i class="fas fa-shopping-cart text-2xl"></i>
           <span id="cartCount" class="hidden absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"></span>
-        </button>
+        </a>
       </div>
     </div>
   </header>
@@ -48,13 +45,7 @@
   </section>
   <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
     <p>&copy; <span id="year"></span> مملكة العطور - جميع الحقوق محفوظة</p>
-  </footer>
-  <div id="cartDrawer">
-    <div class="p-4 border-b flex justify-between items-center">
-      <h2 class="text-lg font-bold" data-i18n="titles.cart">السلة</h2>
-      <button onclick="toggleCart()" class="text-gray-600">&times;</button>
-    </div>
-    <div id="cartItems" class="p-4 space-y-2 overflow-y-auto"></div>
+  </footer>    <div id="cartItems" class="p-4 space-y-2 overflow-y-auto"></div>
   </div>
 
   <script src="config.js"></script>

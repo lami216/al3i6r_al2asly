@@ -9,7 +9,9 @@
     "checkout": "Passer la commande",
     "confirm": "Confirmer et envoyer via WhatsApp",
     "use_my_location": "Utiliser ma position",
-    "view_map": "Voir sur la carte"
+    "view_map": "Voir sur la carte",
+    "continue_shopping": "Continuer les achats",
+    "cancel": "Annuler et revenir au panier"
   },
   "labels": {
     "full_name": "Nom complet",
