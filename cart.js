@@ -1,23 +1,40 @@
 // Cart management using localStorage
 let cart = [];
+let addCooldown = false;
 
 // inject styles for add-to-cart message
 const cartMsgStyle = document.createElement('style');
 cartMsgStyle.textContent = `
-#cartMessage {
+#cartToast {
   position: fixed;
-  top: 1rem;
-  left: 1rem;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
   background: #16a34a;
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   border-radius: 0.5rem;
   z-index: 2000;
-  animation: cartMsgMove 0.6s forwards;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  animation: fadeIn 0.3s ease-out;
 }
-@keyframes cartMsgMove {
-  from { top: 1rem; left: 1rem; opacity: 0; }
-  to { top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 1; }
+#cartToast.fade-out {
+  animation: fadeOut 0.3s forwards;
+}
+#cartToast button {
+  background: rgba(255,255,255,0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }`;
 document.head.appendChild(cartMsgStyle);
 
@@ -25,6 +42,7 @@ function loadCart() {
   try {
     const data = localStorage.getItem('perfume_cart');
     cart = data ? JSON.parse(data) : [];
+    cart = cart.map(item => ({ ...item, qty: item.qty ? Number(item.qty) : 1 }));
   } catch (e) {
     cart = [];
   }
@@ -36,10 +54,16 @@ function saveCart() {
 }
 
 function addToCart(product) {
-  cart.push(product);
+  const existing = cart.find(item => item.id === product.id);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    product.qty = 1;
+    cart.push(product);
+  }
   saveCart();
   renderCart();
-  showCartMessage();
+  showCartMessage(product.name);
 }
 
 function removeFromCart(id) {
@@ -59,12 +83,13 @@ function renderCart() {
   let total = 0;
   container.innerHTML = cart
     .map(item => {
-      total += Number(item.price);
+      const itemTotal = Number(item.price) * item.qty;
+      total += itemTotal;
       return `<div class="flex items-center gap-2 border-b py-2" data-id="${item.id}">
         <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain rounded"/>
         <div class="flex-1">
           <p class="text-sm">${item.name}</p>
-          <p class="text-xs text-yellow-600 font-bold">${item.price} أوقية</p>
+          <p class="text-xs text-yellow-600 font-bold">${item.price} أوقية × ${item.qty}</p>
         </div>
         <button class="text-red-500 text-xl" onclick="removeFromCart('${item.id}')">&times;</button>
       </div>`;
@@ -81,32 +106,34 @@ function renderCart() {
 function updateCartCount() {
   const countEl = document.getElementById('cartCount');
   if (!countEl) return;
-  countEl.textContent = cart.length;
-  if (cart.length > 0) {
+  const count = cart.reduce((sum, item) => sum + item.qty, 0);
+  countEl.textContent = count;
+  if (count > 0) {
     countEl.classList.remove('hidden');
   } else {
     countEl.classList.add('hidden');
   }
 }
 
-function showCartMessage() {
-  const existing = document.getElementById('cartMessage');
+function showCartMessage(name) {
+  const existing = document.getElementById('cartToast');
   if (existing) existing.remove();
   const msg = document.createElement('div');
-  msg.id = 'cartMessage';
-  msg.textContent = 'تم إضافة المنتج للسلة';
+  msg.id = 'cartToast';
+  msg.innerHTML = `<span>تمت إضافة ${name} إلى السلة</span><button onclick="toggleCart()">عرض السلة</button>`;
   document.body.appendChild(msg);
   setTimeout(() => {
-    msg.remove();
-  }, 1500);
+    msg.classList.add('fade-out');
+    setTimeout(() => msg.remove(), 300);
+  }, 2500);
 }
 
 function buildWhatsAppMessage() {
   let message = 'السلام عليكم، أريد شراء المنتجات التالية:\n';
   cart.forEach(item => {
-    message += `- ${item.name} ×1 — ${item.price} أوقية\n`;
+    message += `- ${item.name} ×${item.qty} — ${item.price} أوقية\n`;
   });
-  const total = cart.reduce((sum, item) => sum + Number(item.price), 0);
+  const total = cart.reduce((sum, item) => sum + Number(item.price) * item.qty, 0);
   message += `الإجمالي: ${total} أوقية`;
   return message;
 }
@@ -124,6 +151,9 @@ function toggleCart() {
 }
 
 function addToCartFromCard(btn) {
+  if (addCooldown) return;
+  addCooldown = true;
+  setTimeout(() => (addCooldown = false), 500);
   const card = btn.closest('.product');
   if (!card) return;
   const product = {
@@ -138,3 +168,4 @@ function addToCartFromCard(btn) {
 // initialize
 loadCart();
 renderCart();
+updateCartCount();

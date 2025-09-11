@@ -173,13 +173,13 @@
           ? `<span class="line-through text-red-500">${product.originalPrice} أوقية</span> <span class="text-yellow-500">${product.price} أوقية</span> (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`
           : (product.desc.split(' - ')[1] || product.price + ' أوقية');
         const symbols = productsData.symbols[product.name] || '';
-        const badgeHTML = product.badge ? `<span class="absolute top-0 right-2 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : '';
+        const badgeHTML = product.badge ? `<span class=\"absolute -top-3 right-2 z-20 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded\">${product.badge}</span>` : '';
         div.className = 'product';
         div.setAttribute('data-id', product.name);
         div.setAttribute('data-name', product.name);
         div.setAttribute('data-price', product.price);
         div.setAttribute('data-image', product.img);
-        const addBtnHTML = `<button class="absolute top-0 left-2 bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm" onclick="addToCartFromCard(this)"><i class=\"fas fa-cart-plus\"></i></button>`;
+        const addBtnHTML = `<button class=\"absolute -top-3 left-2 z-20 bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm\" onclick=\"addToCartFromCard(this)\"><i class=\\"fas fa-cart-plus\\"></i></button>`;
         div.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p class="price">${priceText}</p><button class="order-btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>`;
         searchResults.appendChild(div);
       });

@@ -176,13 +176,13 @@
           : product.desc.split(' - ')[1] || product.price + ' أوقية';
         const descText = product.desc.split(' - ')[0];
         const symbols = productsData.symbols[product.name] || '';
-        const badgeHTML = product.badge ? `<span class="absolute top-0 right-2 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded">${product.badge}</span>` : '';
+        const badgeHTML = product.badge ? `<span class=\"absolute -top-3 right-2 z-20 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded\">${product.badge}</span>` : '';
         productDiv.className = 'product';
         productDiv.setAttribute('data-id', product.name);
         productDiv.setAttribute('data-name', product.name);
         productDiv.setAttribute('data-price', product.price);
         productDiv.setAttribute('data-image', product.img);
-        const addBtnHTML = `<button class="absolute top-0 left-2 bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm" onclick="addToCartFromCard(this)"><i class=\"fas fa-cart-plus\"></i></button>`;
+        const addBtnHTML = `<button class=\"absolute -top-3 left-2 z-20 bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm\" onclick=\"addToCartFromCard(this)\"><i class=\\"fas fa-cart-plus\\"></i></button>`;
         productDiv.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/250?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p><button class="order-btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>`;
         productGrid.appendChild(productDiv);
       });
