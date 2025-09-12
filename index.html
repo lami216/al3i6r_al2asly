@@ -231,7 +231,9 @@
       renderResults();
     });
 
-    renderResults();
+    window.addEventListener('load', () => {
+      loadProducts().then(renderResults);
+    });
 
   </script>
   <script src="https://unpkg.com/@supabase/supabase-js"></script>
