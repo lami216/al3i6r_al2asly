@@ -60,8 +60,8 @@
     document.getElementById('year').textContent = new Date().getFullYear();
     const bestGrid = document.getElementById('bestGrid');
     window.addEventListener('load', () => {
-      loadProducts().then(() => {
-        const bestProducts = productsData.products.filter(p => p.badge === 'الأكثر مبيعاً');
+      loadProducts('best').then(() => {
+        const bestProducts = productsData.products;
         bestProducts.forEach(product => {
           const div = document.createElement('div');
           const isAvailable = product.available;

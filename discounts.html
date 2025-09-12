@@ -61,8 +61,8 @@
     const discountGrid = document.getElementById('discountGrid');
     const noDiscounts = document.getElementById('noDiscounts');
     window.addEventListener('load', () => {
-      loadProducts().then(() => {
-        const discounted = productsData.products.filter(p => p.originalPrice);
+      loadProducts('discounts').then(() => {
+        const discounted = productsData.products;
         if (discounted.length === 0) {
           noDiscounts.classList.remove('hidden');
         } else {

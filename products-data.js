@@ -133,34 +133,62 @@
     let productsData = JSON.parse(JSON.stringify(localProductsData));
     window.productsData = productsData;
 
-    async function loadProducts() {
-      productsData = JSON.parse(JSON.stringify(localProductsData));
+    async function loadProducts(category = 'all') {
+      const filter = (p) => {
+        if (category === 'men' || category === 'women' || category === 'unisex') {
+          return p.category === category;
+        }
+        if (category === 'best') return p.badge === 'الأكثر مبيعاً';
+        if (category === 'discounts') return !!p.originalPrice;
+        return true;
+      };
+      const baseProducts = localProductsData.products.filter(filter);
+      const baseSymbols = {};
+      baseProducts.forEach(p => {
+        if (localProductsData.symbols[p.name]) {
+          baseSymbols[p.name] = localProductsData.symbols[p.name];
+        }
+      });
+      productsData = { products: baseProducts, symbols: baseSymbols };
+
       if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL &&
           typeof SUPABASE_ANON_KEY !== 'undefined' && SUPABASE_ANON_KEY &&
           window.supabase) {
         try {
           const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
           const { data, error } = await client.from('products').select('*');
-          if (!error && Array.isArray(data)) {
+          if (!error && Array.isArray(data) && data.length > 0) {
             data.forEach(p => {
               const mapped = {
                 name: p.name,
-                desc: p.description || '',
-                price: p.price,
-                img: p.image_url,
-                category: p.category,
-                available: p.available
+                desc: p.description ?? undefined,
+                img: p.image_url ?? undefined,
+                price: p.price ?? undefined,
+                available: p.available ?? undefined,
+                category: p.category ?? undefined
               };
               const idx = productsData.products.findIndex(lp => lp.name === p.name);
               if (idx >= 0) {
-                productsData.products[idx] = { ...productsData.products[idx], ...mapped };
+                const existing = productsData.products[idx];
+                Object.keys(mapped).forEach(key => {
+                  if (mapped[key] != null) existing[key] = mapped[key];
+                });
               } else {
-                productsData.products.push(mapped);
+                const newProduct = {
+                  name: mapped.name || '',
+                  desc: mapped.desc || '',
+                  img: mapped.img || '',
+                  price: mapped.price != null ? mapped.price : 0,
+                  available: mapped.available != null ? mapped.available : false,
+                  category: mapped.category || ''
+                };
+                productsData.products.push(newProduct);
               }
-              if (p.symbols) {
+              if (p.symbols != null) {
                 productsData.symbols[p.name] = p.symbols;
               }
             });
+            productsData.products = productsData.products.filter(filter);
           }
         } catch (err) {
           console.error('Failed to fetch products from Supabase', err);
