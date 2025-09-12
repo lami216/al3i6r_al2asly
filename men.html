@@ -220,7 +220,7 @@
       scrollBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
     });
     window.addEventListener('load', () => {
-      loadProducts().then(displayProducts);
+      loadProducts('men').then(displayProducts);
     });
   </script>
   <script src="https://unpkg.com/@supabase/supabase-js"></script>
