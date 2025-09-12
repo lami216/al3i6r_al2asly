@@ -1,4 +1,4 @@
-    const productsData = {
+    const localProductsData = {
       products: [
            { name: 'jean paul gaultier le male elixir', desc: 'عطر شبابي عصري بنفحات حارة - 100000 أوقية', img: 'image/jean_paul_gaultier_le_male_elixir.png', category: 'men', price: 100000, available: true },
         { name: 'Dior sauvage', desc: 'أحد أشهر العطور الرجالية حول العالم - 100000 أوقية', img: 'image/Dior_sauvage_200ml.png', category: 'men', price: 100000, available: true, badge: 'الأكثر مبيعاً' },
@@ -128,4 +128,46 @@
         'Sense Laverne': '🍁❄️'
      
       }
-    };  
+    };
+
+    let productsData = JSON.parse(JSON.stringify(localProductsData));
+    window.productsData = productsData;
+
+    async function loadProducts() {
+      productsData = JSON.parse(JSON.stringify(localProductsData));
+      if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL &&
+          typeof SUPABASE_ANON_KEY !== 'undefined' && SUPABASE_ANON_KEY &&
+          window.supabase) {
+        try {
+          const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+          const { data, error } = await client.from('products').select('*');
+          if (!error && Array.isArray(data)) {
+            data.forEach(p => {
+              const mapped = {
+                name: p.name,
+                desc: p.description || '',
+                price: p.price,
+                img: p.image_url,
+                category: p.category,
+                available: p.available
+              };
+              const idx = productsData.products.findIndex(lp => lp.name === p.name);
+              if (idx >= 0) {
+                productsData.products[idx] = { ...productsData.products[idx], ...mapped };
+              } else {
+                productsData.products.push(mapped);
+              }
+              if (p.symbols) {
+                productsData.symbols[p.name] = p.symbols;
+              }
+            });
+          }
+        } catch (err) {
+          console.error('Failed to fetch products from Supabase', err);
+        }
+      }
+      window.productsData = productsData;
+      return productsData;
+    }
+
+    window.loadProducts = loadProducts;
