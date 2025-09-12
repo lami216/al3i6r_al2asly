@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تسجيل الدخول</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="image/favicon.svg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="text-gray-800">
+  <header class="bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="index.html" class="flex items-center space-x-2">
+        <i class="fas fa-spray-can-sparkles text-3xl text-white"></i>
+        <h1 class="text-xl font-bold logo__text"></h1>
+      </a>
+      <div class="flex items-center gap-4">
+        <a href="wishlist.html" class="text-white"><i class="fas fa-heart text-2xl"></i></a>
+        <a href="cart.html" class="relative text-white p-2 bg-transparent">
+          <i class="fas fa-shopping-cart text-2xl"></i>
+          <span id="cartCount" class="hidden absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"></span>
+        </a>
+      </div>
+    </div>
+  </header>
+  <section class="py-8">
+    <div class="container mx-auto px-4 max-w-md">
+      <h2 class="text-3xl font-bold mb-6 text-center text-yellow-700">حسابك</h2>
+      <form id="loginForm" class="bg-white p-4 rounded shadow space-y-2">
+        <input id="loginEmail" type="email" class="w-full border p-2" placeholder="البريد الإلكتروني" required>
+        <input id="loginPassword" type="password" class="w-full border p-2" placeholder="كلمة المرور" required>
+        <button type="submit" class="bg-yellow-500 text-white w-full py-2 rounded">تسجيل الدخول</button>
+        <p class="text-center text-sm"><a id="showSignup" href="#" class="text-blue-600">إنشاء حساب</a></p>
+      </form>
+      <form id="signupForm" class="bg-white p-4 rounded shadow space-y-2 hidden">
+        <input id="signupEmail" type="email" class="w-full border p-2" placeholder="البريد الإلكتروني" required>
+        <input id="signupPassword" type="password" class="w-full border p-2" placeholder="كلمة المرور" required>
+        <button type="submit" class="bg-yellow-500 text-white w-full py-2 rounded">تسجيل</button>
+        <p class="text-center text-sm"><a id="showLogin" href="#" class="text-blue-600">لدي حساب بالفعل</a></p>
+      </form>
+      <div class="text-center mt-4">
+        <div id="g_id_onload" data-client_id="GOOGLE_CLIENT_ID" data-callback="handleGoogleSignIn"></div>
+        <div class="g_id_signin" data-type="standard"></div>
+      </div>
+    </div>
+  </section>
+  <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
+    <p>&copy; <span id="year"></span> <span class="logo__text"></span> - جميع الحقوق محفوظة</p>
+    <div class="mt-2 flex justify-center gap-4">
+      <a href="about.html" class="px-3 py-1 border border-white rounded">من نحن</a>
+      <a href="contact.html" class="px-3 py-1 border border-white rounded">تواصل معنا</a>
+      <a href="privacy.html" class="px-3 py-1 border border-white rounded">سياسة الخصوصية</a>
+      <a href="terms.html" class="px-3 py-1 border border-white rounded">الشروط والأحكام</a>
+    </div>
+  </footer>
+  <script src="config.js"></script>
+  <script src="cart.js"></script>
+  <script src="auth-ui.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
