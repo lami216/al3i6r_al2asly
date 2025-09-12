@@ -33,11 +33,17 @@
     <div class="container mx-auto px-4">
       <h2 class="text-3xl font-bold mb-6 text-center text-yellow-700" data-i18n="titles.wishlist">المفضّلة</h2>
       <div id="wishlistGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 products-grid"></div>
-      <p id="wishlistEmpty" class="text-center text-gray-500 hidden" data-i18n="wishlist.empty">لا توجد عناصر في المفضّلة</p>
+      <p id="wishlistEmpty" class="text-center text-gray-500 hidden" data-i18n="wishlist.empty">لا توجد عناصر مفضلة بعد</p>
     </div>
   </section>
   <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
     <p>&copy; <span id="year"></span> <span data-i18n="titles.brand"></span> - <span data-i18n="home.footer_rights"></span></p>
+    <div class="mt-2 flex justify-center gap-4">
+      <a href="about.html" data-i18n="footer.links.about"></a>
+      <a href="contact.html" data-i18n="footer.links.contact"></a>
+      <a href="privacy.html" data-i18n="footer.links.privacy"></a>
+      <a href="terms.html" data-i18n="footer.links.terms"></a>
+    </div>
   </footer>
   <script src="config.js"></script>
   <script src="products-data.js"></script>
@@ -59,7 +65,10 @@
         div.setAttribute('data-name', product.name);
         div.setAttribute('data-price', product.price);
         div.setAttribute('data-image', product.img);
-        div.innerHTML = `${addBtnHTML}<img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><p class="price">${priceText}</p><button class="order-btn" data-i18n="buttons.add_to_cart" onclick="addToCartFromCard(this)"></button>`;
+        const buttonHTML = product.available
+          ? `<button class=\"order-btn\" data-i18n=\"buttons.add_to_cart\" onclick=\"addToCartFromCard(this)\"></button>`
+          : `<button class=\"order-btn bg-gray-300 text-gray-500 cursor-not-allowed\" disabled data-i18n=\"buttons.unavailable\"></button>`;
+        div.innerHTML = `${addBtnHTML}<img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><p class="price">${priceText}</p>${buttonHTML}`;
         grid.appendChild(div);
       });
       initWishlistForProducts();

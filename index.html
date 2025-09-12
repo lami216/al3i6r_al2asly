@@ -187,6 +187,9 @@
         const isAvailable = product.available;
         const availabilityText = isAvailable ? t('availability.yes') : t('availability.no');
         const availabilityClass = isAvailable ? 'yes' : 'no';
+        const buttonHTML = isAvailable
+          ? `<button class="order-btn" data-i18n="buttons.add_to_cart" onclick="addToCartFromCard(this)"></button>`
+          : `<button class="order-btn bg-gray-300 text-gray-500 cursor-not-allowed" disabled data-i18n="buttons.unavailable"></button>`;
         const priceText = product.originalPrice
           ? `<span class="line-through text-red-500">${formatNumber(product.originalPrice)} ${t('currency')}</span> <span class="text-yellow-500">${formatNumber(product.price)} ${t('currency')}</span> (${formatNumber(Math.round((1 - product.price / product.originalPrice) * 100))}% ${t('labels.discount')})`
           : `${formatNumber(product.price)} ${t('currency')}`;
@@ -202,7 +205,7 @@
         div.setAttribute('data-name', product.name);
         div.setAttribute('data-price', product.price);
         div.setAttribute('data-image', product.img);
-        div.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p class="price">${priceText}</p><button class="order-btn" data-i18n="buttons.add_to_cart" onclick="addToCartFromCard(this)"></button>`;
+        div.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p class="price">${priceText}</p>${buttonHTML}`;
         searchResults.appendChild(div);
       });
       initWishlistForProducts();
