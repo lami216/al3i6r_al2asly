@@ -1,25 +1,18 @@
-}
-<!-- يجب أن يكون sdk تحت قبل auth-ui.js -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config/supabase.js"></script>
-<script>
-/* ====== إعدادات أساسية ====== */
-// تأكد أن supabase مُعرَّف من config/supabase.js:
-// window.supabase = createClient(SUPABASE_URL, SUPABASE_ANON)
+/* auth-ui.js */
 
-/* رابط الرجوع بعد الدخول */
+// رابط العودة بعد تسجيل الدخول
 const REDIRECT = `${location.origin}${location.pathname.replace(/[^/]+$/, '')}account.html`;
 
-/* تحديث رابط الحساب بالأعلى */
+// تحديث رابط الحساب في الهيدر بحسب حالة الجلسة
 async function updateAuthLink() {
-  const a = document.getElementById('authLink');
-  if (!a) return;
+  const link = document.getElementById('authLink');
+  if (!link) return;
   const { data: { session } } = await supabase.auth.getSession();
   const base = location.pathname.replace(/[^/]+$/, '');
-  a.href = session ? `${base}account.html` : `${base}auth.html`;
+  link.href = session ? `${base}account.html` : `${base}auth.html`;
 }
 
-/* إرسال رمز OTP للبريد */
+// إرسال رمز التحقق إلى البريد
 async function sendOtp(email) {
   const { error } = await supabase.auth.signInWithOtp({
     email,
@@ -28,18 +21,18 @@ async function sendOtp(email) {
   if (error) throw error;
 }
 
-/* التحقق من رمز OTP (الأرقام التي تصلك على البريد) */
+// التحقق من رمز OTP وتسجيل الدخول
 async function verifyOtp(email, token) {
   const { data, error } = await supabase.auth.verifyOtp({
     email,
     token,
-    type: 'email'   // مهم: OTP للبريد
+    type: 'email'
   });
   if (error) throw error;
   return data;
 }
 
-/* تسجيل الدخول بجوجل */
+// تسجيل الدخول باستخدام جوجل
 async function loginWithGoogle() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
@@ -51,8 +44,8 @@ async function loginWithGoogle() {
   if (error) throw error;
 }
 
-/* ربط الأحداث */
-document.addEventListener('DOMContentLoaded', () => {
+// ربط عناصر الواجهة بعد تحميل الصفحة
+addEventListener('DOMContentLoaded', () => {
   updateAuthLink();
 
   const emailInput = document.getElementById('loginEmail');
@@ -86,7 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!email || !code) return alert('أدخل البريد والرمز.');
       verifyBtn.disabled = true;
       try {
-        await verifyOtp(email, code);
+        const { user } = await verifyOtp(email, code);
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+        }
         location.href = REDIRECT;
       } catch (err) {
         alert('رمز غير صالح: ' + err.message);
@@ -100,11 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
     googleBtn.addEventListener('click', async (e) => {
       e.preventDefault();
       try {
-        await loginWithGoogle(); // سيحوّل تلقائياً
+        await loginWithGoogle();
       } catch (err) {
         alert('فشل تسجيل الدخول بجوجل: ' + err.message);
       }
     });
   }
 });
-</script>
