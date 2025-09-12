@@ -241,6 +241,33 @@
   }
   window.applyTranslations = applyTranslations;
 
+  function applyCanonical(){
+    const page = document.body.dataset.page || 'home';
+    let url = window.location.origin + '/';
+    if(page !== 'home') url += page + '.html';
+    let link = document.querySelector('link[rel="canonical"]');
+    if(!link){
+      link = document.createElement('link');
+      link.setAttribute('rel','canonical');
+      document.head.appendChild(link);
+    }
+    link.setAttribute('href', url);
+  }
+
+  function applyStructuredData(){
+    const data = {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": cfg.brand && cfg.brand.name ? cfg.brand.name : '',
+      "url": window.location.origin,
+      "logo": window.location.origin + '/image/logo.png'
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(data);
+    document.head.appendChild(script);
+  }
+
   function init(){
     window.i18nData.titles.brand = cfg.brand && cfg.brand.name ? cfg.brand.name : window.i18nData.titles.brand;
     applyBranding(cfg);
@@ -249,6 +276,8 @@
     if(typeof renderCart === 'function') renderCart();
     if(typeof initWishlistForProducts === 'function') initWishlistForProducts();
     if(typeof window.updateSEO === 'function') window.updateSEO();
+    applyCanonical();
+    applyStructuredData();
   }
 
   init();
