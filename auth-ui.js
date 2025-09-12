@@ -12,26 +12,6 @@ async function updateAuthLink() {
   link.href = session ? `${base}account.html` : `${base}auth.html`;
 }
 
-// إرسال رمز التحقق إلى البريد
-async function sendOtp(email) {
-  const { error } = await supabase.auth.signInWithOtp({
-    email,
-    options: { emailRedirectTo: REDIRECT }
-  });
-  if (error) throw error;
-}
-
-// التحقق من رمز OTP وتسجيل الدخول
-async function verifyOtp(email, token) {
-  const { data, error } = await supabase.auth.verifyOtp({
-    email,
-    token,
-    type: 'email'
-  });
-  if (error) throw error;
-  return data;
-}
-
 // تسجيل الدخول باستخدام جوجل
 async function loginWithGoogle() {
   const { error } = await supabase.auth.signInWithOAuth({
@@ -61,7 +41,8 @@ addEventListener('DOMContentLoaded', () => {
       if (!email) return alert('اكتب بريدك الإلكتروني');
       sendBtn.disabled = true;
       try {
-        await sendOtp(email);
+        const { error } = await supabase.auth.signInWithOtp({ email });
+        if (error) throw error;
         alert('تم إرسال رمز التحقق إلى بريدك.');
       } catch (err) {
         alert('فشل إرسال الرمز: ' + err.message);
@@ -75,15 +56,14 @@ addEventListener('DOMContentLoaded', () => {
     verifyBtn.addEventListener('click', async (e) => {
       e.preventDefault();
       const email = (emailInput?.value || '').trim();
-      const code  = (otpInput?.value || '').trim();
-      if (!email || !code) return alert('أدخل البريد والرمز.');
+      const token = (otpInput?.value || '').trim();
+      if (!email || !token) return alert('أدخل البريد والرمز.');
       verifyBtn.disabled = true;
       try {
-        const { user } = await verifyOtp(email, code);
-        if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
-        }
-        location.href = REDIRECT;
+        const { data, error } = await supabase.auth.verifyOtp({ email, token, type: 'email' });
+        if (error) throw error;
+        localStorage.setItem('user', JSON.stringify(data.user));
+        location.href = 'account.html';
       } catch (err) {
         alert('رمز غير صالح: ' + err.message);
       } finally {
