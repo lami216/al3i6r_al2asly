@@ -64,7 +64,9 @@
   <script src="auth-ui.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    requireAuth();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if(!user) window.location.href = 'auth.html';
+    });
   </script>
 </body>
 </html>

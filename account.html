@@ -25,13 +25,15 @@
       </div>
     </div>
   </header>
+
   <section class="py-8">
     <div class="container mx-auto px-4 max-w-md text-center">
       <h2 class="text-3xl font-bold mb-6 text-yellow-700">حسابي</h2>
       <p id="accountEmail" class="mb-4"></p>
-      <button id="logoutBtn" class="bg-red-500 text-white w-full py-2 rounded">تسجيل الخروج</button>
+      <button id="logoutButton" class="bg-red-500 text-white w-full py-2 rounded">تسجيل الخروج</button>
     </div>
   </section>
+
   <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
     <p>&copy; <span id="year"></span> <span class="logo__text"></span> - جميع الحقوق محفوظة</p>
     <div class="mt-2 flex justify-center gap-4">
@@ -41,6 +43,7 @@
       <a href="terms.html" class="px-3 py-1 border border-white rounded">الشروط والأحكام</a>
     </div>
   </footer>
+
   <script src="config.js"></script>
   <script src="cart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -48,11 +51,14 @@
   <script src="auth-ui.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    requireAuth();
-    const user = getUser();
-    if(user){
+    document.addEventListener('DOMContentLoaded', async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if(!user){
+        window.location.href = 'auth.html';
+        return;
+      }
       document.getElementById('accountEmail').textContent = user.email;
-    }
+    });
   </script>
 </body>
 </html>

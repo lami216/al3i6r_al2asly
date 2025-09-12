@@ -1,114 +1,57 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <title>الدخول / إنشاء حساب</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>تسجيل الدخول</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="image/favicon.svg">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <!-- Google One Tap / Button (اختياري – لما يشتغل جوجل عندك) -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body class="bg-gray-100 text-gray-800">
-
-  <!-- الهيدر البسيط (لو عندك هيدر جاهز خليه) -->
-  <header class="bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow">
-    <div class="container max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
-      <a href="index.html" class="flex items-center gap-2">
-        <i class="fa-solid fa-spray-can-sparkles text-2xl"></i>
-        <span class="text-xl font-bold">العطر الأصلي</span>
+  <header class="bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="index.html" class="flex items-center space-x-2">
+        <i class="fas fa-spray-can-sparkles text-3xl text-white"></i>
+        <h1 class="text-xl font-bold logo__text"></h1>
       </a>
-      <nav class="flex items-center gap-4">
-        <a href="wishlist.html"><i class="fa-regular fa-heart text-xl"></i></a>
-        <a href="cart.html" class="relative"><i class="fa-solid fa-shopping-cart text-xl"></i><span id="cartCount" class="hidden absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 text-xs grid place-items-center">0</span></a>
-        <!-- يتم حقنه تلقائيًا من auth-ui.js -->
-        <a id="authLink" class="hidden"></a>
-      </nav>
+      <div class="flex items-center gap-4">
+        <a href="wishlist.html" class="text-white"><i class="fas fa-heart text-2xl"></i></a>
+        <a id="authLink" href="auth.html" class="text-white"><i class="fas fa-user text-2xl"></i></a>
+        <a href="cart.html" class="relative text-white p-2 bg-transparent">
+          <i class="fas fa-shopping-cart text-2xl"></i>
+          <span id="cartCount" class="hidden absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center"></span>
+        </a>
+      </div>
     </div>
   </header>
 
-  <main class="container max-w-md mx-auto px-4 py-10">
-    <h1 class="text-2xl font-bold text-center text-yellow-700 mb-6">مرحبًا 👋</h1>
-
-    <!-- تبويب بسيط -->
-    <div class="grid grid-cols-3 rounded-xl overflow-hidden mb-6 border border-yellow-200">
-      <button id="tabSignIn"  class="py-2 bg-white text-yellow-700 font-semibold">تسجيل الدخول</button>
-      <button id="tabSignUp"  class="py-2 bg-yellow-50 hover:bg-white">إنشاء حساب</button>
-      <button id="tabOtp"     class="py-2 bg-yellow-50 hover:bg-white">رمز التحقق (OTP)</button>
-    </div>
-
-    <!-- تسجيل الدخول بكلمة مرور -->
-    <form id="formSignIn" class="bg-white rounded-xl shadow p-5 space-y-4">
-      <div>
-        <label class="block mb-1 text-sm">البريد الإلكتروني</label>
-        <input id="siEmail" type="email" required class="w-full border rounded-lg px-3 py-2" placeholder="you@example.com">
-      </div>
-      <div>
-        <label class="block mb-1 text-sm">كلمة المرور</label>
-        <input id="siPassword" type="password" required class="w-full border rounded-lg px-3 py-2" placeholder="••••••••">
-      </div>
-      <button class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-lg font-semibold">تسجيل الدخول</button>
-      <p class="text-center text-sm text-gray-500">نسيت كلمة المرور؟ <a href="#" id="btnReset" class="text-yellow-700 underline">إعادة تعيين عبر رابط</a></p>
-      <p class="text-center text-xs text-gray-400" id="siMsg"></p>
-    </form>
-
-    <!-- إنشاء حساب ببريد+كلمة مرور+اسم+هاتف -->
-    <form id="formSignUp" class="hidden bg-white rounded-xl shadow p-5 space-y-4">
-      <div class="grid grid-cols-1 gap-4">
-        <div>
-          <label class="block mb-1 text-sm">الاسم</label>
-          <input id="suName" type="text" required class="w-full border rounded-lg px-3 py-2" placeholder="اسمك الكامل">
-        </div>
-        <div>
-          <label class="block mb-1 text-sm">الهاتف</label>
-          <input id="suPhone" type="tel" class="w-full border rounded-lg px-3 py-2" placeholder="05xxxxxxxx">
-        </div>
-        <div>
-          <label class="block mb-1 text-sm">البريد الإلكتروني</label>
-          <input id="suEmail" type="email" required class="w-full border rounded-lg px-3 py-2" placeholder="you@example.com">
-        </div>
-        <div>
-          <label class="block mb-1 text-sm">كلمة المرور</label>
-          <input id="suPassword" type="password" minlength="6" required class="w-full border rounded-lg px-3 py-2" placeholder="على الأقل 6 أحرف">
-        </div>
-      </div>
-      <button class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-lg font-semibold">إنشاء الحساب</button>
-      <p class="text-center text-xs text-gray-400" id="suMsg"></p>
-    </form>
-
-    <!-- دخول برمز OTP -->
-    <form id="formOtp" class="hidden bg-white rounded-xl shadow p-5 space-y-4">
-      <div>
-        <label class="block mb-1 text-sm">البريد الإلكتروني</label>
-        <input id="otpEmail" type="email" required class="w-full border rounded-lg px-3 py-2" placeholder="you@example.com">
-      </div>
-      <div class="flex gap-2">
-        <button type="button" id="btnSendOtp" class="flex-1 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 py-2 rounded-lg font-semibold">إرسال رمز OTP</button>
-      </div>
-      <div>
-        <label class="block mb-1 text-sm">رمز التحقق</label>
-        <input id="otpCode" inputmode="numeric" pattern="[0-9]*" class="w-full border rounded-lg px-3 py-2" placeholder="أدخل الرمز">
-      </div>
-      <button id="btnVerifyOtp" type="button" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-lg font-semibold">تأكيد الرمز</button>
-      <p class="text-center text-xs text-gray-400" id="otpMsg"></p>
-    </form>
-
-    <!-- زر جوجل (اختياري) -->
-    <div class="mt-6 bg-white rounded-xl shadow p-5 text-center">
-      <button id="btnGoogle" class="w-full border py-2 rounded-lg font-semibold flex items-center justify-center gap-2">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5" alt="">
-        تسجيل الدخول بحساب Google
-      </button>
-      <p class="text-xs text-gray-400 mt-2">بعد تسجيل الدخول سيتم تحويلك إلى <a href="account.html" class="underline">حسابي</a></p>
+  <main class="container mx-auto px-4 py-10 max-w-md">
+    <h2 class="text-3xl font-bold mb-6 text-center text-yellow-700">تسجيل الدخول</h2>
+    <div class="bg-white p-6 rounded-xl shadow space-y-4">
+      <input id="loginEmail" type="email" class="w-full border p-2 rounded" placeholder="you@example.com">
+      <button id="sendOtpBtn" class="w-full bg-yellow-500 text-white py-2 rounded">إرسال رمز</button>
+      <input id="otpCode" inputmode="numeric" class="w-full border p-2 rounded" placeholder="رمز التحقق">
+      <button id="verifyOtpBtn" class="w-full bg-yellow-600 text-white py-2 rounded">تأكيد الرمز</button>
+      <button id="googleBtn" class="w-full border py-2 rounded flex items-center justify-center gap-2"><i class="fab fa-google"></i> تسجيل بواسطة Google</button>
     </div>
   </main>
 
   <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
-    <p>© جميع الحقوق محفوظة – العطر الأصلي 2025</p>
+    <p>&copy; <span id="year"></span> <span class="logo__text"></span> - جميع الحقوق محفوظة</p>
+    <div class="mt-2 flex justify-center gap-4">
+      <a href="about.html" class="px-3 py-1 border border-white rounded">من نحن</a>
+      <a href="contact.html" class="px-3 py-1 border border-white rounded">تواصل معنا</a>
+      <a href="privacy.html" class="px-3 py-1 border border-white rounded">سياسة الخصوصية</a>
+      <a href="terms.html" class="px-3 py-1 border border-white rounded">الشروط والأحكام</a>
+    </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
+  <script src="cart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config/supabase.js"></script>
   <script src="auth-ui.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
