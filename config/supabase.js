@@ -10,7 +10,7 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // دالة اختبار للتأكد أن الاتصال شغال
 async function testConnection() {
   try {
-    let { data, error } = await supabase.from("products").select("*").limit(1);
+    let { data, error } = await supabase.from("product").select("*").limit(1);
     if (error) {
       console.error("❌ خطأ في الاتصال بـ Supabase:", error.message);
     } else {
