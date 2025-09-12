@@ -43,7 +43,12 @@
   </header>
   <main class="container mx-auto p-4 text-center">
     <h2 class="text-3xl font-bold mb-4" data-i18n="pages.contact.title"></h2>
-    <a id="whatsBtn" class="inline-block mt-4 px-6 py-3 bg-green-500 text-white rounded" target="_blank" data-i18n="pages.contact.content"></a>
+    <div class="flex justify-center gap-4 mt-4">
+      <a id="whatsBtn" target="_blank"><img src="image/whatsapp-icon.png" alt="Whatsapp" class="w-12 h-12"></a>
+      <a id="facebookLink" target="_blank"><img src="image/facebook-icon.png" alt="Facebook" class="w-12 h-12"></a>
+      <a id="tiktokLink" target="_blank"><img src="image/tiktok-icon.png" alt="TikTok" class="w-12 h-12"></a>
+      <a id="callLink"><img src="image/call-icon.png" alt="Call" class="w-12 h-12"></a>
+    </div>
   </main>
   <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
     <p>&copy; <span id="year"></span> <span data-i18n="titles.brand"></span> - <span data-i18n="home.footer_rights"></span></p>
@@ -60,7 +65,10 @@
     document.getElementById('year').textContent = new Date().getFullYear();
     if(window.config && config.whatsapp && config.whatsapp.number){
       document.getElementById('whatsBtn').href = 'https://wa.me/'+config.whatsapp.number;
+      document.getElementById('callLink').href = 'tel:'+config.whatsapp.number;
     }
+    document.getElementById('facebookLink').href = 'https://facebook.com/';
+    document.getElementById('tiktokLink').href = 'https://www.tiktok.com/';
   </script>
 </body>
 </html>

@@ -73,7 +73,9 @@
       "add_to_cart": "أضف للسلة",
       "order_now": "اطلب الآن",
       "add_to_wishlist": "إضافة إلى المفضلة",
-      "best_sellers": "الأكثر مبيعاً"
+      "best_sellers": "الأكثر مبيعاً",
+      "browse_perfumes": "تصفح العطور",
+      "unavailable": "غير متوفر حالياً"
     },
     "labels": {
       "full_name": "الاسم الكامل",
@@ -101,7 +103,8 @@
     },
     "alerts": {
       "fill_name_phone": "يرجى إدخال الاسم والهاتف",
-      "fill_address": "يرجى إدخال العنوان"
+      "fill_address": "يرجى إدخال العنوان",
+      "enter_address_manually": "أدخل عنوانك يدوياً"
     },
     "toasts": {
       "added_cart": "تمت إضافة {name} إلى السلة",
@@ -112,12 +115,12 @@
       "checkout_failed": "فشل إرسال الطلب"
     },
     "cart": {
-      "empty": "سلة التسوق فارغة",
+      "empty": "سلتك فارغة",
       "total": "الإجمالي:",
       "buy_all": "شراء الجميع"
     },
     "wishlist": {
-      "empty": "لا توجد عناصر في المفضّلة"
+      "empty": "لا توجد عناصر مفضلة بعد"
     },
     "home": {
       "hero_title": "أهلاً بكم في العطر الأصلي",

@@ -123,7 +123,13 @@
     </div>
   </section>
   <footer class="bg-yellow-600 text-white text-center py-6 mt-12">
-    <p>&copy; <span id="year"></span> <span class="logo__text"></span> - <span data-i18n="home.footer_rights"></span></p>
+    <p>&copy; <span id="year"></span> <span data-i18n="titles.brand"></span> - <span data-i18n="home.footer_rights"></span></p>
+    <div class="mt-2 flex justify-center gap-4">
+      <a href="about.html" data-i18n="footer.links.about"></a>
+      <a href="contact.html" data-i18n="footer.links.contact"></a>
+      <a href="privacy.html" data-i18n="footer.links.privacy"></a>
+      <a href="terms.html" data-i18n="footer.links.terms"></a>
+    </div>
   </footer>
   <a href="#" id="scrollToTop" class="fixed bottom-5 left-5 bg-yellow-400 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-500 transition z-50">
     <i class="fas fa-arrow-up"></i>
@@ -181,8 +187,11 @@
       filtered.forEach(product => {
         const productDiv = document.createElement('div');
         const isAvailable = product.available;
-        const availabilityText = isAvailable ? 'متوفر' : 'غير متوفر';
+        const availabilityText = isAvailable ? t('availability.yes') : t('availability.no');
         const availabilityClass = isAvailable ? 'yes' : 'no';
+        const buttonHTML = isAvailable
+          ? `<button class="order-btn" data-i18n="buttons.add_to_cart" onclick="addToCartFromCard(this)"></button>`
+          : `<button class="order-btn bg-gray-300 text-gray-500 cursor-not-allowed" disabled data-i18n="buttons.unavailable"></button>`;
         const priceText = product.originalPrice
           ? `<span class="line-through text-red-500">${product.originalPrice} أوقية</span> <span class="text-yellow-500">${product.price} أوقية</span> (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`
           : product.desc.split(' - ')[1] || product.price + ' أوقية';
@@ -194,7 +203,7 @@
         productDiv.setAttribute('data-name', product.name);
         productDiv.setAttribute('data-price', product.price);
         productDiv.setAttribute('data-image', product.img);
-        productDiv.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/250?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p><button class="order-btn" data-i18n="buttons.add_to_cart" onclick="addToCartFromCard(this)"></button>`;
+        productDiv.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/250?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p>${buttonHTML}`;
         productGrid.appendChild(productDiv);
       });
       initWishlistForProducts();

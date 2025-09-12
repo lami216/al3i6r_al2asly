@@ -70,7 +70,10 @@ function renderCart(){
   const container = document.getElementById('cartItems');
   if(!container){ updateCartCount(); return; }
   if(cart.length === 0){
-    container.innerHTML = `<p class="text-center text-gray-500 mt-4">${t('cart.empty')}</p>`;
+    container.innerHTML = `<div class="text-center text-gray-500 mt-4 space-y-4">`+
+      `<p>${t('cart.empty')}</p>`+
+      `<a href="all.html" class="inline-block bg-yellow-500 text-white px-4 py-2 rounded">${t('buttons.browse_perfumes')}</a>`+
+      `</div>`;
     updateCartCount();
     return;
   }
@@ -183,6 +186,7 @@ function getLocation(){
     checkoutData.lat = lat; checkoutData.lng = lng; delete checkoutData.address; saveCheckoutData();
     showMap(lat,lng);
   }, err => {
+    alert(t('alerts.enter_address_manually'));
     document.getElementById('manualAddress').classList.remove('hidden');
   });
 }
