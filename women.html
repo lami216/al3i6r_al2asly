@@ -39,54 +39,53 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100%;
       position: relative;
     }
     .product img {
       max-width: 100%;
-      height: 250px;
+      height: 150px;
       object-fit: contain;
       border-radius: 12px;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
     .product h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
       color: #1e293b;
       overflow-wrap: anywhere;
     }
     .product .availability {
       font-size: 0.9rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
     .availability.yes { color: #22c55e; }
     .availability.no { color: #ef4444; }
     .product .price {
       font-weight: bold;
       color: #eab308;
-      font-size: 1rem;
-      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
     }
     .product button.order-btn {
       background-color: #facc15;
       color: #1f2937;
       border: none;
-      padding: 0.6rem 1rem;
+      padding: 0.4rem 0.6rem;
       border-radius: 12px;
       cursor: pointer;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       transition: 0.3s;
     }
     .product button.order-btn:hover { background-color: #eab308; }
-    .symbol { font-size: 1.4rem; margin-top: 1.5rem; margin-bottom: 0.4rem; }
-    .product p { overflow-wrap: anywhere; }
+    .symbol { font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.25rem; }
+    .product p { overflow-wrap: anywhere; color: #1e293b; }
     #scrollToTop { display: none; }  </style>
 </head>
 <body class="text-gray-800" data-page="women">
   <header class="text-white shadow-lg sticky top-0 z-50 bg-gradient-to-r from-yellow-500 to-yellow-300">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <a href="index.html" class="flex items-center space-x-2">
-        <img src="image/logo.svg" alt="العطر الأصلي" class="h-8 w-8"/>
+        <i class="fas fa-spray-can-sparkles text-3xl text-white"></i>
         <h1 class="text-xl font-bold logo__text" data-i18n="titles.brand"></h1>
       </a>
       <div class="flex items-center gap-4">
