@@ -1,111 +1,110 @@
-  // استرجاع بيانات المستخدم من localStorage (احتياطي)
-function getUser() {
-  try {
-    return JSON.parse(localStorage.getItem("user"));
-  } catch (e) {
-    return null;
-  }
 }
+<!-- يجب أن يكون sdk تحت قبل auth-ui.js -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config/supabase.js"></script>
+<script>
+/* ====== إعدادات أساسية ====== */
+// تأكد أن supabase مُعرَّف من config/supabase.js:
+// window.supabase = createClient(SUPABASE_URL, SUPABASE_ANON)
 
-// التحقق هل المستخدم مسجل دخول
-function isLoggedIn() {
-  return !!getUser();
-}
+/* رابط الرجوع بعد الدخول */
+const REDIRECT = `${location.origin}${location.pathname.replace(/[^/]+$/, '')}account.html`;
 
-// تحديث رابط الحساب في الهيدر
+/* تحديث رابط الحساب بالأعلى */
 async function updateAuthLink() {
-  const a = document.getElementById("authLink"); // الرابط مضاف يدوياً بالهيدر
+  const a = document.getElementById('authLink');
   if (!a) return;
-
-  // جلب السيشن من Supabase
   const { data: { session } } = await supabase.auth.getSession();
-
-  const BASE = location.pathname.split("/").slice(0, 2).join("/");
-  const SITE_URL = location.origin + BASE;
-  const to = (p) => `${SITE_URL}/${p}`.replace(/([^:]\/)\/+/g, "$1");
-
-  // إذا في سيشن -> حساب، إذا لا -> تسجيل دخول
-  a.href = session ? to("account.html") : to("auth.html");
+  const base = location.pathname.replace(/[^/]+$/, '');
+  a.href = session ? `${base}account.html` : `${base}auth.html`;
 }
 
-// تسجيل خروج
-function logout() {
-  localStorage.removeItem("user");
-  supabase.auth.signOut();
+/* إرسال رمز OTP للبريد */
+async function sendOtp(email) {
+  const { error } = await supabase.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: REDIRECT }
+  });
+  if (error) throw error;
+}
+
+/* التحقق من رمز OTP (الأرقام التي تصلك على البريد) */
+async function verifyOtp(email, token) {
+  const { data, error } = await supabase.auth.verifyOtp({
+    email,
+    token,
+    type: 'email'   // مهم: OTP للبريد
+  });
+  if (error) throw error;
+  return data;
+}
+
+/* تسجيل الدخول بجوجل */
+async function loginWithGoogle() {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: REDIRECT,
+      queryParams: { access_type: 'offline', prompt: 'consent' }
+    }
+  });
+  if (error) throw error;
+}
+
+/* ربط الأحداث */
+document.addEventListener('DOMContentLoaded', () => {
   updateAuthLink();
-}
 
-// فرض تسجيل الدخول لصفحات معينة
-function requireAuth() {
-  if (!isLoggedIn()) {
-    alert("يجب تسجيل الدخول أولاً");
-    window.location.href = "auth.html";
-  }
-}
+  const emailInput = document.getElementById('loginEmail');
+  const otpInput   = document.getElementById('otpCode');
+  const sendBtn    = document.getElementById('sendOtpBtn');
+  const verifyBtn  = document.getElementById('verifyOtpBtn');
+  const googleBtn  = document.getElementById('googleBtn');
 
-// بعد تحميل الصفحة
-document.addEventListener("DOMContentLoaded", () => {
-  updateAuthLink();
-
-  // زر تسجيل الدخول (بالبريد/كلمة مرور)
-  const loginForm = document.getElementById("loginForm");
-  if (loginForm) {
-    loginForm.addEventListener("submit", async (e) => {
+  if (sendBtn) {
+    sendBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      const email = loginForm.querySelector("#loginEmail").value;
-      const password = loginForm.querySelector("#loginPassword").value;
-
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        alert("فشل تسجيل الدخول: " + error.message);
-      } else {
-        localStorage.setItem("user", JSON.stringify(data.user));
-        window.location.href = "account.html";
+      const email = (emailInput?.value || '').trim();
+      if (!email) return alert('اكتب بريدك الإلكتروني');
+      sendBtn.disabled = true;
+      try {
+        await sendOtp(email);
+        alert('تم إرسال رمز التحقق إلى بريدك.');
+      } catch (err) {
+        alert('فشل إرسال الرمز: ' + err.message);
+      } finally {
+        sendBtn.disabled = false;
       }
     });
   }
 
-  // زر إنشاء حساب
-  const signupForm = document.getElementById("signupForm");
-  if (signupForm) {
-    signupForm.addEventListener("submit", async (e) => {
+  if (verifyBtn) {
+    verifyBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      const email = signupForm.querySelector("#signupEmail").value;
-      const password = signupForm.querySelector("#signupPassword").value;
-
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-
-      if (error) {
-        alert("فشل إنشاء الحساب: " + error.message);
-      } else {
-        alert("تم إرسال رابط التحقق إلى بريدك الإلكتروني");
-        localStorage.setItem("user", JSON.stringify(data.user));
-        window.location.href = "account.html";
+      const email = (emailInput?.value || '').trim();
+      const code  = (otpInput?.value || '').trim();
+      if (!email || !code) return alert('أدخل البريد والرمز.');
+      verifyBtn.disabled = true;
+      try {
+        await verifyOtp(email, code);
+        location.href = REDIRECT;
+      } catch (err) {
+        alert('رمز غير صالح: ' + err.message);
+      } finally {
+        verifyBtn.disabled = false;
       }
     });
   }
 
-  // زر تسجيل الخروج
-  const logoutBtn = document.getElementById("logoutButton");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => logout());
+  if (googleBtn) {
+    googleBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await loginWithGoogle(); // سيحوّل تلقائياً
+      } catch (err) {
+        alert('فشل تسجيل الدخول بجوجل: ' + err.message);
+      }
+    });
   }
 });
-
-// تسجيل الدخول بجوجل
-async function handleGoogleSignIn(response) {
-  try {
-    const payload = JSON.parse(atob(response.credential.split(".")[1]));
-    localStorage.setItem("user", JSON.stringify({ email: payload.email }));
-    window.location.href = "account.html";
-  } catch (err) {
-    console.error("Google sign-in failed", err);
-  }
-}
+</script>
