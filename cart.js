@@ -68,7 +68,7 @@ function removeFromCart(id){
 
 function renderCart(){
   const container = document.getElementById('cartItems');
-  if(!container) return;
+  if(!container){ updateCartCount(); return; }
   if(cart.length === 0){
     container.innerHTML = `<p class="text-center text-gray-500 mt-4">${t('cart.empty')}</p>`;
     updateCartCount();
