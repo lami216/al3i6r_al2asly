@@ -1,116 +1,111 @@
-<!-- /auth-ui.js -->
-<script>
-/* ===== Helpers ===== */
-const BASE = location.pathname.split('/').slice(0,2).join('/');      // "/al3i6r_al2asly"
-const SITE_URL = location.origin + BASE;                              // "https://…/al3i6r_al2asly"
-const to = p => `${SITE_URL}/${p}`.replace(/([^:]\/)\/+/g,'$1');      // join
-
-async function getSession(){
-  const { data:{ session } } = await supabase.auth.getSession();
-  return session || null;
-}
-
-function injectAuthLink(){
-  const wrap = document.querySelector('header .flex.items-center.gap-4');
-  if(!wrap || document.getElementById('authLink')) return;
-  const a = document.createElement('a');
-  a.id = 'authLink';
-  a.className = 'text-white';
-  a.innerHTML = '<i class="fas fa-user text-2xl"></i>';
-  wrap.insertBefore(a, wrap.firstChild);
-}
-
-async function updateAuthLink(){
-  injectAuthLink();
-  const a = document.getElementById('authLink');
-  if(!a) return;
-  const session = await getSession();
-  a.href = session ? to('account.html') : to('auth.html');
-}
-
-/* ===== Require auth on protected pages (optional) ===== */
-async function requireAuth(){
-  const session = await getSession();
-  if(!session){
-    alert('يُرجى تسجيل الدخول أولاً');
-    location.href = to('auth.html');
+  // استرجاع بيانات المستخدم من localStorage (احتياطي)
+function getUser() {
+  try {
+    return JSON.parse(localStorage.getItem("user"));
+  } catch (e) {
+    return null;
   }
 }
 
-/* ===== Logout binder (if موجود الزر) ===== */
-function bindLogout(){
-  const btn = document.getElementById('logoutButton');
-  if(!btn) return;
-  btn.addEventListener('click', async () => {
-    await supabase.auth.signOut();
-    location.href = to('auth.html');
-  });
+// التحقق هل المستخدم مسجل دخول
+function isLoggedIn() {
+  return !!getUser();
 }
 
-/* ===== Google Sign-in (زر داخل auth.html) ===== */
-function bindGoogle(){
-  const btn = document.getElementById('googleBtn');
-  if(!btn) return;
-  btn.addEventListener('click', async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: to('account.html') }
-    });
-  });
+// تحديث رابط الحساب في الهيدر
+async function updateAuthLink() {
+  const a = document.getElementById("authLink"); // الرابط مضاف يدوياً بالهيدر
+  if (!a) return;
+
+  // جلب السيشن من Supabase
+  const { data: { session } } = await supabase.auth.getSession();
+
+  const BASE = location.pathname.split("/").slice(0, 2).join("/");
+  const SITE_URL = location.origin + BASE;
+  const to = (p) => `${SITE_URL}/${p}`.replace(/([^:]\/)\/+/g, "$1");
+
+  // إذا في سيشن -> حساب، إذا لا -> تسجيل دخول
+  a.href = session ? to("account.html") : to("auth.html");
 }
 
-/* ===== Email OTP flow (الأزرار داخل auth.html) ===== */
-function bindEmailOtp(){
-  const sendBtn = document.getElementById('sendOtpBtn');
-  const verifyBtn = document.getElementById('verifyOtpBtn');
-  const msg = (t, ok=false) => {
-    const el = document.getElementById('authMsg');
-    if(el){ el.textContent = t; el.className = ok ? 'text-green-600' : 'text-red-600'; }
-  };
+// تسجيل خروج
+function logout() {
+  localStorage.removeItem("user");
+  supabase.auth.signOut();
+  updateAuthLink();
+}
 
-  if(sendBtn){
-    sendBtn.addEventListener('click', async (e) => {
+// فرض تسجيل الدخول لصفحات معينة
+function requireAuth() {
+  if (!isLoggedIn()) {
+    alert("يجب تسجيل الدخول أولاً");
+    window.location.href = "auth.html";
+  }
+}
+
+// بعد تحميل الصفحة
+document.addEventListener("DOMContentLoaded", () => {
+  updateAuthLink();
+
+  // زر تسجيل الدخول (بالبريد/كلمة مرور)
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const email = document.getElementById('emailInput').value.trim();
-      if(!email){ msg('أدخل البريد الإلكتروني'); return; }
-      const { error } = await supabase.auth.signInWithOtp({
+      const email = loginForm.querySelector("#loginEmail").value;
+      const password = loginForm.querySelector("#loginPassword").value;
+
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        options: { emailRedirectTo: to('auth.html') }   // آمن لـ GH Pages
+        password,
       });
-      if(error) msg(error.message);
-      else msg('تم إرسال الرمز إلى بريدك 👍', true);
+
+      if (error) {
+        alert("فشل تسجيل الدخول: " + error.message);
+      } else {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        window.location.href = "account.html";
+      }
     });
   }
 
-  if(verifyBtn){
-    verifyBtn.addEventListener('click', async (e) => {
+  // زر إنشاء حساب
+  const signupForm = document.getElementById("signupForm");
+  if (signupForm) {
+    signupForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const email = document.getElementById('emailInput').value.trim();
-      const token = document.getElementById('otpInput').value.trim();
-      if(!email || !token){ msg('أدخل البريد والرمز'); return; }
+      const email = signupForm.querySelector("#signupEmail").value;
+      const password = signupForm.querySelector("#signupPassword").value;
 
-      // ملاحظة: بعض المشاريع تحتاج type:'email' أو 'magiclink' حسب إعداد Supabase Email OTP
-      const { data, error } = await supabase.auth.verifyOtp({
-        email, token, type: 'email'
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
       });
 
-      if(error) msg(error.message);
-      else { msg('تم تسجيل الدخول', true); location.href = to('account.html'); }
+      if (error) {
+        alert("فشل إنشاء الحساب: " + error.message);
+      } else {
+        alert("تم إرسال رابط التحقق إلى بريدك الإلكتروني");
+        localStorage.setItem("user", JSON.stringify(data.user));
+        window.location.href = "account.html";
+      }
     });
   }
-}
 
-/* ===== Init ===== */
-document.addEventListener('DOMContentLoaded', async () => {
-  await updateAuthLink();
-  bindLogout();
-  bindGoogle();
-  bindEmailOtp();
-
-  // حدّث رابط الحساب عند تغيّر حالة الجلسة
-  supabase.auth.onAuthStateChange(() => updateAuthLink());
+  // زر تسجيل الخروج
+  const logoutBtn = document.getElementById("logoutButton");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => logout());
+  }
 });
 
-// تعريض الدالة لو احتجتها بصفحات معيّنة
-window.requireAuth = requireAuth;
-</script>
+// تسجيل الدخول بجوجل
+async function handleGoogleSignIn(response) {
+  try {
+    const payload = JSON.parse(atob(response.credential.split(".")[1]));
+    localStorage.setItem("user", JSON.stringify({ email: payload.email }));
+    window.location.href = "account.html";
+  } catch (err) {
+    console.error("Google sign-in failed", err);
+  }
+}
