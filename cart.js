@@ -19,7 +19,7 @@ const existingStyle = document.head.querySelector('#toastWishlistStyle');
 if(!existingStyle){ styleEl.id = 'toastWishlistStyle'; document.head.appendChild(styleEl); }
 
 // global add-to-cart button markup for product cards
-window.addBtnHTML = `<button class="absolute -top-3 left-2 z-20 bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm" onclick="addToCartFromCard(this)"><i class="fas fa-cart-plus"></i></button>`;
+window.addBtnHTML = '';
 
 function loadCart(){
   try{ const data = localStorage.getItem('perfume_cart'); cart = data ? JSON.parse(data) : []; cart = cart.map(i=>({...i, qty:i.qty?Number(i.qty):1})); }
