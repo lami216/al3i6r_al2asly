@@ -3,7 +3,7 @@
     brand: { name: '' },
     whatsapp: {
       number: '',
-      template: 'السلام عليكم، أريد: {{items}}\nالإجمالي: {{total}} أوقية\nالاسم: {{name}}\nالهاتف: {{phone}}\nالعنوان: {{address}}'
+      template: 'السلام عليكم، أريد: {{items}}\nالإجمالي: {{total}} MRU\nالاسم: {{name}}\nالهاتف: {{phone}}\nالعنوان: {{address}}'
     },
     ui: { cardsPerRowMobile: 2 }
   };
@@ -95,7 +95,7 @@
       "yes": "متوفر",
       "no": "غير متوفر"
     },
-    "currency": "أوقية",
+    "currency": "MRU",
     "badges": {
       "best_seller": "الأكثر مبيعاً",
       "new": "جديد",
@@ -222,7 +222,9 @@
   window.t = t;
 
   function formatNumber(num){
-    return Number(num).toLocaleString('fr-FR');
+    const n = Number(num);
+    if (n === 0) return '0000';
+    return n.toLocaleString('fr-FR');
   }
   window.formatNumber = formatNumber;
 

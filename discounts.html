@@ -81,7 +81,7 @@
             const buttonHTML = isAvailable
               ? `<button class=\"order-btn\" data-i18n=\"buttons.add_to_cart\" onclick=\"addToCartFromCard(this)\"></button>`
               : `<button class=\"order-btn bg-gray-300 text-gray-500 cursor-not-allowed\" disabled data-i18n=\"buttons.unavailable\"></button>`;
-            const priceText = `<span class=\"line-through text-red-500\">${product.originalPrice} أوقية</span> <span class=\"text-yellow-500\">${product.price} أوقية</span> (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`;
+            const priceText = `<span class=\"line-through text-red-500\">${product.originalPrice} MRU</span> <span class=\"text-yellow-500\">${product.price} MRU</span> (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`;
             const descText = product.desc.split(' - ')[0];
             const symbols = productsData.symbols[product.name] || '';
             const badgeHTML = product.badge ? `<span class=\"absolute top-1 right-1 z-20 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded\">${product.badge}</span>` : '';
