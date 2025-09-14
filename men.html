@@ -83,9 +83,7 @@
       font-size: 0.85rem;
       transition: 0.3s;
     }
-    .product button.order-btn:hover { background-color: #eab308; }
-    .symbol { font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.25rem; }
-    .product p { overflow-wrap: anywhere; color: #1e293b; }
+    .product button.order-btn:hover { background-color: #eab308; }    .product p { overflow-wrap: anywhere; color: #1e293b; }
     #scrollToTop {
       display: none;
     }  </style>
@@ -203,14 +201,13 @@
           ? `<span class="line-through text-red-500">${product.originalPrice} أوقية</span> <span class="text-yellow-500">${product.price} أوقية</span> (${Math.round((1 - product.price / product.originalPrice) * 100)}% خصم)`
           : product.desc.split(' - ')[1] || product.price + ' أوقية';
         const descText = product.desc.split(' - ')[0];
-        const symbols = productsData.symbols[product.name] || '';
         const badgeHTML = product.badge ? `<span class=\"absolute top-1 right-1 z-20 ${product.badge === 'الأكثر مبيعاً' ? 'bg-yellow-500' : 'bg-red-500'} text-white text-xs px-2 py-1 rounded\">${product.badge}</span>` : '';
         productDiv.className = 'product';
         productDiv.setAttribute('data-id', product.name);
         productDiv.setAttribute('data-name', product.name);
         productDiv.setAttribute('data-price', product.price);
         productDiv.setAttribute('data-image', product.img);
-        productDiv.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/250?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p>${buttonHTML}`;
+        productDiv.innerHTML = `${badgeHTML}${addBtnHTML}<img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/250?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p>${buttonHTML}`;
         productGrid.appendChild(productDiv);
       });
       initWishlistForProducts();
