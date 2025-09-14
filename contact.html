@@ -52,10 +52,11 @@
   </header>
   <main class="container mx-auto p-4 text-center">
     <h2 class="text-3xl font-bold mb-4" data-i18n="pages.contact.title"></h2>
-    <div class="flex justify-center gap-4 mt-4">
-      <a id="tiktokLink" target="_blank"><img src="image/tiktok-icon.png" alt="TikTok" class="w-16 h-16"></a>
-      <a id="callLink"><img src="image/call-icon.png" alt="Call" class="w-16 h-16"></a>
-      <a id="whatsBtn" target="_blank"><img src="image/whatsapp-icon.png" alt="Whatsapp" class="w-16 h-16"></a>
+    <div class="flex justify-center gap-6 mt-4 text-6xl">
+      <a id="tiktokLink" target="_blank" aria-label="TikTok" class="text-black"><i class="fa-brands fa-tiktok"></i></a>
+      <a id="callLink" aria-label="Call" class="text-green-600"><i class="fa-solid fa-phone"></i></a>
+      <a id="whatsBtn" target="_blank" aria-label="WhatsApp" class="text-green-500"><i class="fa-brands fa-whatsapp"></i></a>
+      <a id="facebookLink" target="_blank" aria-label="Facebook" class="text-blue-600"><i class="fa-brands fa-facebook"></i></a>
     </div>
   </main>
   <footer class="bg-yellow-600 text-white text-center py-6 mt-auto">
@@ -77,6 +78,7 @@
     document.getElementById('whatsBtn').href = `https://wa.me/${phone}`;
     document.getElementById('callLink').href = `tel:${phone}`;
     document.getElementById('tiktokLink').href = 'https://www.tiktok.com/@al3i6r_al2asly?_t=ZM-8zefYgIM3mf&_r=1';
+    document.getElementById('facebookLink').href = 'https://www.facebook.com/profile.php?id=100092359748442';
   </script>
 </body>
 </html>
