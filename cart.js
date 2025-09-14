@@ -218,7 +218,7 @@ function confirmCheckout(){
   const template = config.whatsapp && config.whatsapp.template ? config.whatsapp.template : '';
   const message = buildWhatsAppMessage(template, { items: itemsStr, total: formatNumber(total), name, phone, address });
   const phoneNum = (config.whatsapp && config.whatsapp.number)
-    ? config.whatsapp.number.replace(/\s+/g, '')
+    ? config.whatsapp.number.replace(/[^0-9]/g, '')
     : '';
   const url = `https://wa.me/${phoneNum}?text=${encodeURIComponent(message)}`;
   try{

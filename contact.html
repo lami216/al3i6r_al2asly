@@ -70,7 +70,7 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
     const phone = (config.whatsapp && config.whatsapp.number)
-      ? config.whatsapp.number.replace(/\s+/g, '')
+      ? config.whatsapp.number.replace(/[^0-9]/g, '')
       : '';
     document.getElementById('whatsBtn').href = `https://wa.me/${phone}`;
     document.getElementById('callLink').href = `tel:${phone}`;

@@ -5,6 +5,7 @@
   <title></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
+  <meta name="keywords" content="">
   <meta property="og:title" content="">
   <meta property="og:description" content="">
   <meta property="og:image" content="image/og-image.png">
@@ -29,6 +30,11 @@
       document.querySelector('meta[name="description"]').setAttribute('content', desc);
       document.querySelector('meta[property="og:title"]').setAttribute('content', title);
       document.querySelector('meta[property="og:description"]').setAttribute('content', desc);
+      const keywordsKey = 'pages.' + page + '.keywords';
+      const keywords = t(keywordsKey);
+      if (keywords !== keywordsKey) {
+        document.querySelector('meta[name="keywords"]').setAttribute('content', keywords);
+      }
       document.documentElement.lang = 'ar';
     }
   </script>
