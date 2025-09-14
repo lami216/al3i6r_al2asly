@@ -44,7 +44,7 @@
         { name: 'Bade\'e Al Oud', desc: 'بديع العود عطر مختلط برائحة العود - 10000 أوقية', img: 'image/Badee Al Oud.png', category: 'unisex', price: 10000, available: true },
         { name: 'Mayar', desc: 'ميار عطر نسائي ناعم', img: 'image/Mayar.png', category: 'women', price: 7000, originalPrice: 10000, available: true },
         { name: 'Gissah', desc: 'قصة عطر نسائي جذاب', img: 'image/Gissah.png', category: 'women', price: 6500, originalPrice: 9500, available: true },
-        { name: 'Asad Zinzibar', desc: 'أسد عطر رجالي بنفحات الزنجبيل - 8200 أوقية', img: 'image/Asad Zinzibar.png', category: 'men', price: 8200, available: true },
+        { name: 'Asad Zanzibar', desc: 'أسد عطر رجالي بنفحات الزنجبيل - 8200 أوقية', img: 'image/Asad Zanzibar.png', category: 'men', price: 8200, available: true },
         { name: 'Saif Al Batal', desc: 'سيف البطل عطر رجالي شرقي - 8000 أوقية', img: 'image/Saif Al Batal.png', category: 'men', price: 8000, available: true },
         { name: 'EL GHAWAS', desc: 'الغواص عطر رجالي بحري - 8000 أوقية', img: 'image/EL GHAWAS.png', category: 'men', price: 8000, available: true },
         { name: 'Fakhar Lattafa Gold', desc: 'فخر عطر رجالي فاخر - 8000 أوقية', img: 'image/Fakhar Lattafa Gold.png', category: 'men', price: 8000, available: true },
