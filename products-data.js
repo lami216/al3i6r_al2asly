@@ -63,7 +63,73 @@
         { name: 'In the Stars', desc: 'عطر يجمع بين رائحة الكشمير والتمر الهندي - 12000 أوقية', img: 'image/In_the_Stars.png', category: 'unisex', price: 12000, available: true },
         { name: 'Sense Laverne', desc: 'عطر جورجينا قوي بنفحات الفلفل الأسود والعود - 25000 أوقية', img: 'image/Sense_Laverne.png', category: 'women', price: 25000, available: false },
      
-      ]
+      ],
+       
+      symbols: {
+      'moosouf': '🍁❄️🌙',
+        'jean paul gaultier le male elixir': '🍁❄️🌙',
+        'Dior sauvage': '🌱☂️☀️',
+        'officer': '🌱🍁☀️',
+        'jean_paul_gaultier_paradise': '☂️🌱☀️',
+        'tom_ford_noir': '🍁❄️🌙',
+        '212_VIP_black': '🍁🌙',
+        'Acqua_di_Gio_Armani': '☂️🌱☀️',
+        'La_Nuit_Trésor': '🍁❄️🌙',
+        'MY_WAY': '🌱☂️☀️',
+        'Club_de_Nuit_Sillage': '☀️☂️🌱',
+        'Dolce_and_Gabbana_the_one': '🍁❄️🌙',
+        'You_Intensely': '🍁❄️🌙',
+        'Supremacy_Collectors_Edition': '🍁❄️🌙',
+        'Hawas_Black_Rasasi': '🌱☂️☀️',
+        'Club_de_Nuit_Intense_Man_200ml': '☂️☀️',
+        'Supremacy_Not_Only_Intense': '☂️🌱☀️',
+        'Oud_lavender': '🍁❄️🌙',
+        '9PM_rebel': '🍁🌙',
+        'Liquid_Brun': '🍁❄️🌙',
+        'Odyssey_Spectra': '☂️☀️',
+        'hawas_elixir': '☂️☀️',
+        'Club_De_Nuit_Urban_Elixir': '☂️🌱☀️',
+        '9am_Dive': '☂️🌱☀️',
+        'Turathi_Blue': '☂️☀️',
+        'Hawas_for_Him': '☂️☀️',
+        '9PM': '🍁🌙',
+        'Hawas_Ice_for_Him': '☂️☀️',
+        'Confidential': '🍁❄️🌙',
+        'Al_Wisam': '🍁❄️🌙',       
+        'Supremacy Incense': '🍁❄️🌙',
+        'Mandarin Sky': '🌱☀️',
+        'Khamrah': '🍁❄️🌙',
+        'Khamrah Qahwa': '🍁❄️🌙',
+        'Ra\'ed': '🍁❄️🌙',
+        'Fakhar Lattafa Black': '🍁❄️🌙',
+        'Fakhar Lattafa White': '🌱☀️',
+        'Saheb White': '🌱☀️',
+        'Saheb Brown': '🍁❄️🌙',
+        'Asad': '🍁❄️🌙',
+        'Asala': '🫧☀️🌞',
+        'Bade\'e Al Oud': '🍁❄️🌙',
+        'Mayar': '🌱☀️',
+        'Gissah': '🍁❄️🌙',
+        'Asad Zanzibar': '🍁❄️🌙',
+        'Saif Al Batal': '🍁❄️🌙',
+        'EL GHAWAS': '🌱☀️',
+        'Fakhar Lattafa Gold': '🍁❄️🌙',
+        'Yara': '🌱☀️',
+        'Tamima': '🌱☀️',
+        'Ramz Lattafa': '🍁❄️🌙',
+        'Ameerat Al Arab': '🍁❄️🌙',
+        'Ana Abiyedh': '🌱☀️',
+        'Sayaad Al Quloob': '🍁❄️🌙',
+        'Box Musoof': '🍁❄️🌙',
+        'In The Stars Body Lotion': '❄️🌙',
+        'Into the Night perfume': '🌙🍁',
+        'INTO THE NIGHT Body Lotion': '🌙🍁',
+        'You\'re The One': '☀️🌱',
+        'Gingham': '☀️☂️',
+        'In the Stars': '❄️🌙',
+        'Sense Laverne': '🍁❄️'
+     
+      }
     };
 
     let productsData = JSON.parse(JSON.stringify(localProductsData));
@@ -79,7 +145,13 @@
         return true;
       };
       const baseProducts = localProductsData.products.filter(filter);
-      productsData = { products: baseProducts };
+      const baseSymbols = {};
+      baseProducts.forEach(p => {
+        if (localProductsData.symbols[p.name]) {
+          baseSymbols[p.name] = localProductsData.symbols[p.name];
+        }
+      });
+      productsData = { products: baseProducts, symbols: baseSymbols };
 
       if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL &&
           typeof SUPABASE_ANON_KEY !== 'undefined' && SUPABASE_ANON_KEY &&
@@ -114,10 +186,15 @@
                 };
                 productsData.products.push(newProduct);
               }
+              if (p.symbols != null) {
+                productsData.symbols[p.name] = p.symbols;
               }
             });
             productsData.products = productsData.products.filter(filter);
           }
+        } catch (err) {
+          console.error('Failed to fetch products from Supabase', err);
+        }
       }
       window.productsData = productsData;
       return productsData;

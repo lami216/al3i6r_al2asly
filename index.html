@@ -74,7 +74,9 @@
       font-size: 0.85rem;
       transition: 0.3s;
     }
-    .product button.order-btn:hover { background-color: #eab308; }    .product p { overflow-wrap: anywhere; }
+    .product button.order-btn:hover { background-color: #eab308; }
+    .symbol { font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.25rem; }
+    .product p { overflow-wrap: anywhere; }
   </style>
 </head>
 <body class="text-gray-800 flex flex-col min-h-screen" data-page="home">
@@ -204,6 +206,7 @@
         const priceText = product.originalPrice
           ? `<span class="line-through text-red-500">${formatNumber(product.originalPrice)} ${t('currency')}</span> <span class="text-yellow-500">${formatNumber(product.price)} ${t('currency')}</span> (${formatNumber(Math.round((1 - product.price / product.originalPrice) * 100))}% ${t('labels.discount')})`
           : `${formatNumber(product.price)} ${t('currency')}`;
+        const symbols = productsData.symbols[product.name] || '';
         const badgeMap = {
           'الأكثر مبيعاً': 'badges.best_seller',
           'جديد': 'badges.new',
@@ -215,7 +218,7 @@
         div.setAttribute('data-name', product.name);
         div.setAttribute('data-price', product.price);
         div.setAttribute('data-image', product.img);
-        div.innerHTML = `${badgeHTML}${addBtnHTML}<img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p class="price">${priceText}</p>${buttonHTML}`;
+        div.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p class="price">${priceText}</p>${buttonHTML}`;
         searchResults.appendChild(div);
       });
       initWishlistForProducts();
