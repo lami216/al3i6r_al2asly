@@ -217,7 +217,9 @@ function confirmCheckout(){
   const address = checkoutData.lat ? `https://maps.google.com/?q=${checkoutData.lat},${checkoutData.lng}` : (checkoutData.address||'');
   const template = config.whatsapp && config.whatsapp.template ? config.whatsapp.template : '';
   const message = buildWhatsAppMessage(template, { items: itemsStr, total: formatNumber(total), name, phone, address });
-  const phoneNum = config.whatsapp && config.whatsapp.number ? config.whatsapp.number : '';
+  const phoneNum = (config.whatsapp && config.whatsapp.number)
+    ? config.whatsapp.number.replace(/\s+/g, '')
+    : '';
   const url = `https://wa.me/${phoneNum}?text=${encodeURIComponent(message)}`;
   try{
     window.open(url, '_blank');
