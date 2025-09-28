@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">شعار متجر الصاحب</title>
+  <desc id="desc">حرفا D متقابلان باللون الأبيض على خلفية سوداء</desc>
+  <rect width="512" height="512" fill="#050505" rx="64"/>
+  <g fill="none" stroke="#ffffff" stroke-width="64" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M128 128h112c84 0 152 68 152 152s-68 152-152 152H128Z"/>
+    <path d="M384 128h-112c-84 0-152 68-152 152s68 152 152 152h112Z"/>
+  </g>
+</svg>
