@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" role="img" aria-labelledby="title desc">
+  <title id="title">شعار متجر الصاحب alsahib-dd</title>
+  <desc id="desc">حرفان D متقابلان باللون الذهبي على خلفية سوداء</desc>
+  <rect width="300" height="200" fill="#060606" rx="24"/>
+  <path fill="#f1c21b" fill-rule="evenodd" d="M36 36h72c54 0 96 36 96 64s-42 64-96 64H36zm36 32v64h30c33 0 60-15 60-32s-27-32-60-32z"/>
+  <path fill="#f1c21b" fill-rule="evenodd" d="M264 36h-72c-54 0-96 36-96 64s42 64 96 64h72zm-36 32h-30c-33 0-60 15-60 32s27 32 60 32h30z"/>
+</svg>
