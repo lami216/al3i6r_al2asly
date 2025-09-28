@@ -18,6 +18,8 @@
     body { font-family: 'El Messiri', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
     .container { max-width: 100%; }
     .product { background: white; padding: 1rem; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+    .product.has-detail { cursor: pointer; }
+    .product.has-detail .order-btn { cursor: pointer; }
     .product img { max-width: 100%; height: 150px; object-fit: contain; border-radius: 12px; margin-bottom: 0.5rem; }
     .product h3 { font-size: 1rem; margin-bottom: 0.25rem; color: #1e293b; overflow-wrap: anywhere; }
     .product .availability { font-size: 0.9rem; margin-bottom: 0.25rem; }
@@ -89,6 +91,10 @@
           div.setAttribute('data-name', product.name);
           div.setAttribute('data-price', product.price);
           div.setAttribute('data-image', product.img);
+          if (product.detailPage) {
+            div.setAttribute('data-detail', product.detailPage);
+            div.classList.add('has-detail');
+          }
           div.innerHTML = `${badgeHTML}${addBtnHTML}<div class="symbol">${symbols}</div><img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=عطر'"><h3>${product.name}</h3><div class="availability ${availabilityClass}">${availabilityText}</div><p>${descText}</p><p class="price">${priceText}</p>${buttonHTML}`;
           bestGrid.appendChild(div);
         });

@@ -1,6 +1,6 @@
     const localProductsData = {
       products: [
-           { name: 'jean paul gaultier le male elixir', desc: 'عطر شبابي عصري بنفحات حارة - 0000 MRU', img: 'image/jean_paul_gaultier_le_male_elixir.png', category: 'men', price: '0000', available: true },
+           { name: 'jean paul gaultier le male elixir', desc: 'عطر شبابي عصري بنفحات حارة - 0000 MRU', img: 'image/jean_paul_gaultier_le_male_elixir.png', category: 'men', price: '0000', available: true, detailPage: 'product/jean-paul-gaultier-le-male-elixir.html' },
         { name: 'Dior sauvage', desc: 'أحد أشهر العطور الرجالية حول العالم - 0000 MRU', img: 'image/Dior_sauvage_200ml.png', category: 'men', price: '0000', available: true, badge: 'الأكثر مبيعاً' },
         { name: 'officer', desc: 'عطر رسمي أنيق يلائم جميع المناسبات - 0000 MRU', img: 'image/officer.png', category: 'men', price: '0000', available: true, badge: 'الأكثر مبيعاً' },
         { name: 'jean_paul_gaultier_paradise', desc: 'عطر شبابي فاخر بنفحات برية منعشة - 0000 MRU', img: 'image/jean_paul_gaultier_paradise.png', category: 'men', price: '0000', available: true, badge: 'جديد' },
