@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dior Sauvage</title>
+  <meta name="description" content="اكتشف قوة وانتعاش عطر Dior Sauvage الرجالي بنفحاته البرية المنعشة وثباته العالي."/>
+  <meta property="og:title" content="Dior Sauvage"/>
+  <meta property="og:description" content="جاذبية عصرية تجمع بين الفلفل الحار والحمضيات مع عطر Dior Sauvage."/>
+  <meta property="og:image" content="../image/dior1.svg"/>
+  <meta property="og:type" content="product"/>
+  <link rel="icon" type="image/svg+xml" href="../image/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="../image/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../image/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../image/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../image/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../image/android-chrome-512x512.png">
+  <link rel="manifest" href="../image/site.webmanifest">
+  <link rel="shortcut icon" href="../image/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'El Messiri', sans-serif; background: linear-gradient(135deg, #e0f2fe, #f8fafc); color: #0f172a; }
+    header { background: linear-gradient(to right, #1d4ed8, #0ea5e9); }
+    .hero-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(6px); border-radius: 24px; box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2); }
+    .badge { background: linear-gradient(135deg, #1d4ed8, #0ea5e9); color: #fff; padding: 0.3rem 0.9rem; border-radius: 999px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.35rem; }
+    .notes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
+    .note-card { background: white; border-radius: 18px; padding: 1rem; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08); text-align: center; }
+    .gallery { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .gallery img { width: 100%; border-radius: 20px; object-fit: cover; aspect-ratio: 3 / 4; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12); }
+    .cta-card { background: linear-gradient(135deg, #0ea5e9, #1d4ed8); color: #fff; border-radius: 24px; box-shadow: 0 20px 40px rgba(30, 64, 175, 0.35); }
+    .cta-card button { background: #fff; color: #1d4ed8; font-weight: 600; border-radius: 16px; padding: 0.75rem 1.5rem; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .cta-card button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12); }
+    .breadcrumb a { color: #1d4ed8; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <header class="shadow-lg">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between text-white">
+      <a href="../index.html" class="flex items-center gap-3">
+        <i class="fas fa-spray-can-sparkles text-3xl"></i>
+        <span class="text-xl font-bold logo__text">العطر الأصلي</span>
+      </a>
+      <nav class="flex items-center gap-4 text-sm">
+        <a href="../wishlist.html" class="flex items-center gap-1"><i class="fas fa-heart"></i><span>المفضلة</span></a>
+        <a href="../cart.html" class="flex items-center gap-1"><i class="fas fa-shopping-cart"></i><span>السلة</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    <section class="max-w-6xl mx-auto px-6 py-10">
+      <nav class="breadcrumb text-sm text-slate-500 mb-6">
+        <a href="../index.html" class="hover:underline">الرئيسية</a>
+        <span class="mx-2 text-slate-400">/</span>
+        <a href="../men.html" class="hover:underline">عطور رجالية</a>
+        <span class="mx-2 text-slate-400">/</span>
+        <span id="breadcrumbName" class="text-slate-600 font-semibold">Dior Sauvage</span>
+      </nav>
+      <div class="hero-card p-8 grid lg:grid-cols-2 gap-8 items-center">
+        <div class="space-y-5">
+          <span class="badge"><i class="fas fa-bolt"></i><span>الأكثر مبيعاً</span></span>
+          <h1 id="productName" class="text-4xl font-bold leading-snug">Dior Sauvage</h1>
+          <p id="productDesc" class="text-lg text-slate-600 leading-loose">
+            عطر يجمع بين القوة والانتعاش بتركيبة مستوحاة من الطبيعة البرية لتمنحك حضوراً لا يُنسى.
+          </p>
+          <div class="flex flex-wrap gap-3 text-sm text-slate-600">
+            <span class="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-full"><i class="fas fa-wind text-sky-500"></i>انتعاش دائم</span>
+            <span class="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-full"><i class="fas fa-sun text-sky-500"></i>ملائم لليل والنهار</span>
+            <span class="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-full"><i class="fas fa-compass text-sky-500"></i>مستوحى من الفضاء المفتوح</span>
+          </div>
+        </div>
+        <div class="gallery">
+          <img src="../image/dior1.svg" alt="Dior Sauvage زجاجة العطر" loading="lazy">
+          <img src="../image/dior2.svg" alt="Dior Sauvage تصميم العبوة" loading="lazy">
+          <img src="../image/dior3.svg" alt="Dior Sauvage تفاصيل فنية" loading="lazy">
+          <img src="../image/dior4.svg" alt="Dior Sauvage مشهد ملهم" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 py-10 grid lg:grid-cols-[2fr,1fr] gap-10 items-start">
+      <div class="space-y-8">
+        <div class="bg-white rounded-3xl shadow-xl p-8">
+          <h2 class="text-2xl font-semibold mb-4 text-sky-600">لماذا ستحبه؟</h2>
+          <ul class="space-y-3 text-slate-600 leading-relaxed">
+            <li class="flex gap-3"><span class="text-sky-500 mt-1"><i class="fas fa-check-circle"></i></span><span>افتتاحية قوية من الفلفل السيشوان والبرغموت تمنحك لمسة حارة ومنعشة في آن واحد.</span></li>
+            <li class="flex gap-3"><span class="text-sky-500 mt-1"><i class="fas fa-check-circle"></i></span><span>قلب عطري غني باللافندر والإليمي يوازن بين الأناقة والراحة.</span></li>
+            <li class="flex gap-3"><span class="text-sky-500 mt-1"><i class="fas fa-check-circle"></i></span><span>قاعدة خشبية من الأمبروكسان والأخشاب تمنح ثباتاً يدوم لساعات طويلة.</span></li>
+          </ul>
+        </div>
+        <div class="bg-white rounded-3xl shadow-xl p-8">
+          <h2 class="text-2xl font-semibold mb-4 text-sky-600">تركيبة العطر</h2>
+          <div class="notes-grid text-slate-600">
+            <div class="note-card">
+              <h3 class="font-semibold text-sky-500 mb-2">المقدمة</h3>
+              <p>برغموت كالابريا، فلفل سيشوان</p>
+            </div>
+            <div class="note-card">
+              <h3 class="font-semibold text-sky-500 mb-2">القلب</h3>
+              <p>لافندر، فلفل وردي، إليمي</p>
+            </div>
+            <div class="note-card">
+              <h3 class="font-semibold text-sky-500 mb-2">القاعدة</h3>
+              <p>أمبروكسان، خشب الأرز، الفانيليا</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-3xl shadow-xl p-8">
+          <h2 class="text-2xl font-semibold mb-4 text-sky-600">مناسب لـ</h2>
+          <div class="grid sm:grid-cols-2 gap-4 text-slate-600">
+            <div class="p-4 bg-slate-100 rounded-2xl flex gap-3 items-start"><i class="fas fa-briefcase text-sky-500 text-xl"></i><span>إطلالات العمل الرسمية والاجتماعات المهمة.</span></div>
+            <div class="p-4 bg-slate-100 rounded-2xl flex gap-3 items-start"><i class="fas fa-moon text-sky-500 text-xl"></i><span>سهرات مسائية تحتاج لحضور مميز.</span></div>
+            <div class="p-4 bg-slate-100 rounded-2xl flex gap-3 items-start"><i class="fas fa-gift text-sky-500 text-xl"></i><span>هدية راقية لمحبي الروائح المميزة.</span></div>
+            <div class="p-4 bg-slate-100 rounded-2xl flex gap-3 items-start"><i class="fas fa-plane text-sky-500 text-xl"></i><span>مرافقة مثالية لرحلاتك ومغامراتك.</span></div>
+          </div>
+        </div>
+      </div>
+      <aside class="space-y-6">
+        <div class="cta-card p-8 space-y-5">
+          <div>
+            <span class="uppercase tracking-widest text-sm">السعر</span>
+            <p id="productPrice" class="text-4xl font-extrabold">0000 MRU</p>
+            <p id="availabilityText" class="text-sm text-white/80">متوفر حالياً للتوصيل الفوري.</p>
+          </div>
+          <button id="addToCartDetail" type="button" class="w-full flex items-center justify-center gap-2">
+            <i class="fas fa-cart-plus"></i>
+            <span>أضف للسلة الآن</span>
+          </button>
+          <a id="whatsappLink" href="#" target="_blank" rel="noopener" class="block text-center bg-white/15 hover:bg-white/25 border border-white/30 rounded-xl py-3 transition">تواصل عبر واتساب</a>
+        </div>
+        <div class="bg-white rounded-3xl shadow-xl p-6 space-y-4 text-slate-600">
+          <h2 class="text-xl font-semibold text-sky-600">تفاصيل إضافية</h2>
+          <p><strong>الحجم المتوفر:</strong> 100 مل</p>
+          <p><strong>التصنيف العطري:</strong> خشبي - حمضي</p>
+          <p><strong>بلد المنشأ:</strong> فرنسا</p>
+          <p><strong>التوصيل:</strong> متاح لجميع ولايات موريتانيا خلال 24-48 ساعة.</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="bg-slate-900 text-white py-6 mt-auto">
+    <div class="max-w-6xl mx-auto px-6 text-center space-y-2">
+      <p>&copy; <span id="year"></span> <span class="logo__text">العطر الأصلي</span>. جميع الحقوق محفوظة.</p>
+      <div class="flex flex-wrap justify-center gap-4 text-sm text-white/80">
+        <a href="../about.html" class="hover:text-white">من نحن</a>
+        <a href="../contact.html" class="hover:text-white">تواصل معنا</a>
+        <a href="../privacy.html" class="hover:text-white">سياسة الخصوصية</a>
+        <a href="../terms.html" class="hover:text-white">الشروط والأحكام</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../products-data.js"></script>
+  <script src="../cart.js"></script>
+  <script>
+    const DETAIL_PRODUCT_NAME = 'Dior sauvage';
+
+    function updateDetailPage(product) {
+      const brand = (window.config && config.brand && config.brand.name) ? config.brand.name : 'العطر الأصلي';
+      document.title = `${product.name} | ${brand}`;
+      const descParts = product.desc.split(' - ');
+      document.getElementById('productName').textContent = product.name;
+      document.getElementById('breadcrumbName').textContent = product.name;
+      document.querySelector('meta[name="description"]').setAttribute('content', descParts[0] || product.desc);
+      document.querySelector('meta[property="og:description"]').setAttribute('content', descParts[0] || product.desc);
+      document.getElementById('productDesc').textContent = descParts[0] || product.desc;
+      document.getElementById('productPrice').textContent = `${formatNumber(product.price)} ${t('currency')}`;
+      const availability = product.available ? t('availability.yes') : t('availability.no');
+      document.getElementById('availabilityText').textContent = product.available
+        ? `${availability} — التوصيل يتم خلال 24-48 ساعة.`
+        : `${availability} — سيتم إشعارك فور توفره.`;
+      const whatsappCfg = (config && config.whatsapp) ? config.whatsapp : { number: '', template: '' };
+      const message = buildWhatsAppMessage(whatsappCfg.template || '', {
+        items: `${product.name} ×1`,
+        total: formatNumber(product.price),
+        name: '',
+        phone: '',
+        address: ''
+      });
+      const waLink = whatsappCfg.number
+        ? `https://wa.me/${whatsappCfg.number}?text=${encodeURIComponent(message)}`
+        : '#';
+      const whatsappLink = document.getElementById('whatsappLink');
+      whatsappLink.href = waLink;
+      whatsappLink.classList.toggle('pointer-events-none', waLink === '#');
+      whatsappLink.classList.toggle('opacity-60', waLink === '#');
+
+      const addBtn = document.getElementById('addToCartDetail');
+      addBtn.disabled = !product.available;
+      addBtn.classList.toggle('opacity-70', !product.available);
+      addBtn.innerHTML = product.available
+        ? '<i class="fas fa-cart-plus"></i><span>أضف للسلة الآن</span>'
+        : '<i class="fas fa-bell"></i><span>غير متوفر حالياً</span>';
+      addBtn.onclick = () => {
+        addToCart({
+          id: product.name,
+          name: product.name,
+          price: Number(product.price),
+          image: product.img
+        });
+      };
+    }
+
+    window.addEventListener('load', async () => {
+      document.getElementById('year').textContent = new Date().getFullYear();
+      applyBranding(config);
+      applyTranslations();
+      await loadProducts();
+      const product = productsData.products.find(p => p.name === DETAIL_PRODUCT_NAME);
+      if (product) {
+        updateDetailPage(product);
+      }
+    });
+  </script>
+</body>
+</html>
