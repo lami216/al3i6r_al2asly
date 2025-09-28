@@ -119,12 +119,25 @@ function updateCartCount(){
   if(count>0){ countEl.classList.remove('hidden'); } else { countEl.classList.add('hidden'); }
 }
 
+function getCartLink(){
+  const path = window.location.pathname;
+  const segments = path.split('/').filter(Boolean);
+  let depth = segments.length;
+  if (!path.endsWith('/') && segments.length && segments[segments.length - 1].includes('.')) {
+    depth -= 1;
+  }
+  return `${'../'.repeat(depth)}cart.html`;
+}
+
 function showToast(message, withCart){
   const existing = document.getElementById('cartToast');
   if(existing) existing.remove();
   const msg = document.createElement('div');
   msg.id = 'cartToast';
-  msg.innerHTML = withCart ? `<span>${message}</span><a href="cart.html" class="underline">${t('titles.cart')}</a>` : `<span>${message}</span>`;
+  const cartLink = getCartLink();
+  msg.innerHTML = withCart
+    ? `<span>${message}</span><a href="${cartLink}" class="underline">${t('titles.cart')}</a>`
+    : `<span>${message}</span>`;
   document.body.appendChild(msg);
   setTimeout(()=>{ msg.classList.add('fade-out'); setTimeout(()=>msg.remove(),300); },2500);
 }
