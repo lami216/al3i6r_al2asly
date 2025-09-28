@@ -160,23 +160,51 @@
     const DETAIL_PRODUCT_NAME = 'Dior sauvage';
     const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.webp', '.svg'];
 
+    function hasFileExtension(path) {
+      return /\.[a-z0-9]+$/i.test(path || '');
+    }
+
+    function updatePrimaryMeta(src) {
+      if (!src) return;
+      const ogImageMeta = document.querySelector('meta[property="og:image"]');
+      if (ogImageMeta) {
+        ogImageMeta.setAttribute('content', src);
+      }
+    }
+
     function resolveGalleryImage(img, basePath, fallback) {
       if (!basePath) {
         img.src = fallback;
         return;
       }
 
+      const candidates = [];
+      if (hasFileExtension(basePath)) {
+        candidates.push(basePath);
+      } else {
+        candidates.push(basePath);
+        IMAGE_EXTENSIONS.forEach(ext => {
+          const withExt = `${basePath}${ext}`;
+          if (!candidates.includes(withExt)) {
+            candidates.push(withExt);
+          }
+        });
+      }
+
       let attemptIndex = 0;
       const tryNext = () => {
-        if (attemptIndex >= IMAGE_EXTENSIONS.length) {
+        if (attemptIndex >= candidates.length) {
           img.src = fallback;
           return;
         }
 
-        const candidate = `${basePath}${IMAGE_EXTENSIONS[attemptIndex++]}`;
+        const candidate = candidates[attemptIndex++];
         const tester = new Image();
         tester.onload = () => {
           img.src = candidate;
+          if (img.dataset.role === 'primary-image') {
+            updatePrimaryMeta(candidate);
+          }
         };
         tester.onerror = tryNext;
         tester.src = candidate;
@@ -207,10 +235,7 @@
       document.getElementById('breadcrumbName').textContent = product.name;
       document.querySelector('meta[name="description"]').setAttribute('content', descParts[0] || product.desc);
       document.querySelector('meta[property="og:description"]').setAttribute('content', descParts[0] || product.desc);
-      const ogImageMeta = document.querySelector('meta[property="og:image"]');
-      if (ogImageMeta) {
-        ogImageMeta.setAttribute('content', productImagePath);
-      }
+      updatePrimaryMeta(productImagePath);
       hydrateGallery(product, productImagePath);
       document.getElementById('productDesc').textContent = descParts[0] || product.desc;
       document.getElementById('productPrice').textContent = `${formatNumber(product.price)} ${t('currency')}`;
